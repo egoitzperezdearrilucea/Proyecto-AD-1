@@ -14,6 +14,15 @@ public class Jugador {
     }
 
     //Getter y Setter s
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public int getVida() {
         return vida;
     }
@@ -30,7 +39,16 @@ public class Jugador {
         this.ataque = ataque;
     }
 
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+
     //Funciones
-    
+
 
 }
