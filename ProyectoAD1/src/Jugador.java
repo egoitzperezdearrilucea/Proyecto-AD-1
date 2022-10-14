@@ -1,4 +1,6 @@
-public class Jugador {
+import java.io.Serializable;
+
+public class Jugador implements Serializable {
     //Variables
     String nombre;
     int vida;
