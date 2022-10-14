@@ -16,8 +16,7 @@ public class Main {
         //Variables
         Partida partida;
         Jugador jugador;
-        Enemigo[] enemigos;
-        
+        Enemigo[] enemigos = new Enemigo[10];
 
 
 
@@ -43,8 +42,39 @@ public class Main {
         return jugador;
     }
 
+    public static Enemigo[] importarEnemigosDAT() throws IOException, ClassNotFoundException {
+
+        File fichero = new File ("./src/Enemigos.dat");
+
+        FileInputStream filein = new FileInputStream(fichero);
+        ObjectInputStream dataIS = new ObjectInputStream(filein);
+
+        Enemigo[] enemigos = new Enemigo[10];
+
+        for (int i = 0; i < 10; i++) {
+
+            enemigos[i] = (Enemigo) dataIS.readObject();
+
+            System.out.println(enemigos[i].getNombre());
+
+        }
+        return enemigos;
+    }
+
 
     //Exportar datos
+
+    public static void exportarEnemigosDAT(Enemigo[] enemigos) throws IOException {
+
+        File fichero = new File ("./src/Enemigos.dat");
+        FileOutputStream fileout = new FileOutputStream(fichero);
+        ObjectOutputStream dataOS = new ObjectOutputStream(fileout);
+
+        for (int i = 0; i < enemigos.length; i++) {
+            dataOS.writeObject(enemigos[i]);
+        }
+
+    }
 
     public static void exportarJugadorDAT(Jugador jugador) throws IOException {
 

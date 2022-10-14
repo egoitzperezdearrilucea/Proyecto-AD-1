@@ -1,4 +1,6 @@
-public class Enemigo {
+import java.io.Serializable;
+
+public class Enemigo implements Serializable {
     //Variables
     String nombre;
     int vida;
@@ -12,6 +14,14 @@ public class Enemigo {
     }
 
     //Getter y Setter s
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public int getVida() {
         return vida;
     }
