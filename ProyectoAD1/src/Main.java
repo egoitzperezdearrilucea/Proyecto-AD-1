@@ -1,14 +1,23 @@
+import com.thoughtworks.xstream.XStream;
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         //Variables
         Partida partida;
         Jugador jugador;
         Enemigo[] enemigos;
-
-
-
+        
 
 
     }
@@ -17,7 +26,7 @@ public class Main {
 
     public Jugador importarJugadorDAT() throws IOException, ClassNotFoundException {
 
-        File fichero = new File ("./src/PersonaDat.dat");
+        File fichero = new File ("./src/Jugador.dat");
 
         FileInputStream filein = new FileInputStream(fichero);
 
@@ -47,7 +56,17 @@ public class Main {
 
     }
 
-    public void exportarJugadorXML(Jugador jugador){
+    public static void exportarJugadorXML(Jugador jugador) throws FileNotFoundException {
+
+        try {
+            XStream xstream = new XStream();
+            //cambiar de nombre a las etiquetas XML
+            xstream.alias("jugador", Jugador.class);
+            //Insrtar los objetos en el XML
+            xstream.toXML(jugador, new FileOutputStream("Jugador.xml"));
+        }catch (Exception e)
+        {e.printStackTrace();}
+
 
 
     }
