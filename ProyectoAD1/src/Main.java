@@ -24,6 +24,23 @@ public class Main {
         String opcion;
         Boolean correcto = false;
 
+        //Creacion de enemigos (Solo usar para crear .dat)
+        /*
+        enemigos[0] = new Enemigo("Master False Ant", 50, 5);
+        enemigos[1] = new Enemigo("The Greasy Barbarian", 50, 10);
+        enemigos[2] = new Enemigo("Lord Molten Katana", 100, 5);
+        enemigos[3] = new Enemigo("The Puzzling Devil", 100, 5);
+        enemigos[4] = new Enemigo("Doctor Light Spectacle", 100, 10);
+        enemigos[5] = new Enemigo("Doctor Black Smasher", 100, 10);
+        enemigos[6] = new Enemigo("The Mute Swine", 100, 20);
+        enemigos[7] = new Enemigo("Doctor Genius", 150, 20);
+        enemigos[8] = new Enemigo("Professor Dark Arsonist", 150, 25);
+        enemigos[9] = new Enemigo("Nuclear Macaw", 200, 25);
+        exportarEnemigosDAT(enemigos);
+         */
+
+        //Importar enemigos
+        enemigos = importarEnemigosDAT();
 
         //Opciones jugador
         correcto = false;
@@ -57,9 +74,13 @@ public class Main {
 
 
 
+
+
+
     }
 
     //Funciones
+
     public static Jugador crearJugador() throws IOException {
         String nombre;
         String opcion = null;
@@ -140,8 +161,6 @@ public class Main {
         for (int i = 0; i < 10; i++) {
 
             enemigos[i] = (Enemigo) dataIS.readObject();
-
-            System.out.println(enemigos[i].getNombre());
 
         }
         return enemigos;
