@@ -1,14 +1,15 @@
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Partida {
     //Variables
+    LocalDateTime fecha;
     int puntuacionTotal;
-    int[] puntuaciones;
-    Date fecha;
+    String[] combates;
     String nombreJugador;
 
     //Constructor
-    public Partida(Date fecha, String nombreJugador) {
+    public Partida(LocalDateTime fecha, String nombreJugador) {
         this.fecha = fecha;
         this.nombreJugador = nombreJugador;
     }
@@ -22,11 +23,27 @@ public class Partida {
         this.puntuacionTotal = puntuacionTotal;
     }
 
-    public int[] getPuntuaciones() {
-        return puntuaciones;
+    public String[] getCombates() {
+        return combates;
     }
 
-    public void setPuntuaciones(int[] puntuaciones) {
-        this.puntuaciones = puntuaciones;
+    public void setCombates(String[] combates) {
+        this.combates = combates;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getNombreJugador() {
+        return nombreJugador;
+    }
+
+    public void setNombreJugador(String nombreJugador) {
+        this.nombreJugador = nombreJugador;
     }
 }

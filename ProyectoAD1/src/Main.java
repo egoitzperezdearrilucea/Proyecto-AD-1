@@ -10,6 +10,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.time.LocalDateTime;
+
 
 public class Main {
 
@@ -21,6 +23,8 @@ public class Main {
         Partida partida;
         Jugador jugador = null;
         Enemigo[] enemigos = new Enemigo[10];
+        String[] resultados = new String[10];
+        int puntuacion = 0;
         String opcion;
         Boolean correcto = false;
 
@@ -72,11 +76,74 @@ public class Main {
 
         System.out.println("Jugador cargado: " + jugador.getNombre());
 
+        //Crear partida
+        partida = new Partida(LocalDateTime.now(), jugador.getNombre());
 
 
+        //TESTS
+        /*
+        resultados[0]="Master False Ant vs Juanjo | victoria";
+        resultados[1]="The Greasy Barbarian vs Juanjo | victoria";
+        resultados[2]="Lord Molten Katana vs Juanjo | derrota";
+        puntuacion = 151;
+         */
 
+        //Guardar datos partida
+        int nCombates = 0;
+        for (int i = 0; i < resultados.length; i++) {
+            if (resultados[i] != null){
+                nCombates++;
+            }
+        }
 
+        String[] combates = new String[nCombates];
 
+        for (int i = 0; i < nCombates; i++) {
+                combates[i] = resultados[i];
+        }
+
+        partida.setCombates(combates);
+        partida.setPuntuacionTotal(puntuacion);
+
+        //Mostrar resultados
+        System.out.println("");
+        System.out.println("Resultados finales:");
+        System.out.println("Fecha: " + partida.getFecha());
+        System.out.println("Jugador: " + partida.getNombreJugador());
+        System.out.println("Puntuacion: " + partida.getPuntuacionTotal());
+        System.out.println("Combates:");
+        for (int i = 0; i < partida.getCombates().length; i++) {
+            System.out.println(partida.getCombates()[i]);
+        }
+
+        //Opciones partida
+        correcto = false;
+        while (!correcto) {
+            System.out.println("");
+            System.out.println("Desea exportar la partida?");
+            System.out.println("1-No");
+            System.out.println("2-Si");
+            opcion=br.readLine();
+
+            switch (opcion) {
+                case ("1"): {
+
+                    correcto = true;
+                }
+                break;
+
+                case ("2"): {
+                    exportarPartidaXML(partida);
+                    correcto = true;
+                }
+                break;
+
+                default: {
+                    System.out.println("no se entiende el input");
+                    correcto = false;
+                }
+            }
+        }
     }
 
     //Funciones
@@ -126,8 +193,6 @@ public class Main {
         return jugador;
 
     }
-
-
 
 
     //Importar datos
@@ -201,9 +266,18 @@ public class Main {
             xstream.toXML(jugador, new FileOutputStream("./src/Jugador.xml"));
         }catch (Exception e)
         {e.printStackTrace();}
+    }
 
+    public static void exportarPartidaXML(Partida partida) throws FileNotFoundException {
 
-
+        try {
+            XStream xstream = new XStream();
+            //cambiar de nombre a las etiquetas XML
+            xstream.alias("partida", Partida.class);
+            //Insrtar los objetos en el XML
+            xstream.toXML(partida, new FileOutputStream("./src/Partida_"+ LocalDateTime.now() +".xml"));
+        }catch (Exception e)
+        {e.printStackTrace();}
     }
 
 }
