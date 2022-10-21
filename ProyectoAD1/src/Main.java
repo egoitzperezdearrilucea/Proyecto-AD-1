@@ -82,7 +82,7 @@ public class Main {
         int nCombate = 0;
         while (!fin){
             //Seleccionar enemigo (falta)
-            Enemigo enemigoSeleccionado = enemigos[7];
+            Enemigo enemigoSeleccionado = seleccionarEnemigo(enemigos);
 
             //turno
             Boolean combate = combate(jugador, enemigoSeleccionado, partida);
@@ -94,12 +94,8 @@ public class Main {
             }else {
                 resultados[nCombate]= ("" + enemigoSeleccionado.getNombre() + " vs " + jugador.getNombre() + " | Victoria");
             }
-
             nCombate++;
-
         }
-
-
 
         //Guardar datos partida
         int nCombates = 0;
@@ -159,6 +155,46 @@ public class Main {
     }
 
     //Funciones
+
+    public static Enemigo seleccionarEnemigo(Enemigo[] enemigos) throws IOException {
+        boolean correcto = false;
+        String opcion;
+        Enemigo resultado = null;
+        int seleccion = -1;
+
+        while (!correcto){
+            //Mostrar enemigos
+            System.out.println("");
+            System.out.println("Enemigos:");
+
+            for (int i = 0; i < enemigos.length; i++) {
+                System.out.println(i + "-" + enemigos[i].getNombre() + " | Vida: " + enemigos[i].getVida() + " | Ataque: " + enemigos[i].getAtaque());
+            }
+
+            //Recoger input
+            opcion = br.readLine();
+
+            //Comprobar que el input sea valido
+            try {
+                seleccion = Integer.parseInt(opcion);
+            } catch (NumberFormatException e) {
+                System.out.println("Input no valido");
+            }
+
+            if (seleccion !=-1){
+
+
+                if (Integer.parseInt(opcion) > enemigos.length-1 || Integer.parseInt(opcion) < 0 ){
+                    System.out.println("Input no valido");
+                }else{
+                    //Guardar seleccion
+                    resultado = enemigos[Integer.parseInt(opcion)];
+                    correcto = true;
+                }
+            }
+        }
+        return resultado;
+    }
 
     public static Boolean combate(Jugador jugador, Enemigo enemigo, Partida partida) throws IOException {
         boolean fin = false;
