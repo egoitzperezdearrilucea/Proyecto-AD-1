@@ -26,7 +26,8 @@ public class Main {
         String[] resultados = new String[10];
         int puntuacion = 0;
         String opcion;
-        Boolean correcto = false;
+        boolean correcto = false;
+        boolean fin = false;
 
         //Creacion de enemigos (Solo usar para crear .dat)
         /*
@@ -79,11 +80,28 @@ public class Main {
         //Crear partida
         partida = new Partida(LocalDateTime.now(), jugador.getNombre());
 
+        int nCombate = 0;
+        while (!fin){
+            //Seleccionar enemigo (falta)
+            Enemigo enemigoSeleccionado = enemigos[7];
 
-        //Seleccionar enemigo (falta)
+            //turno
+            Boolean combate = combate(jugador, enemigoSeleccionado);
 
-        //turno
-        Boolean combate = combate(jugador, enemigos[2]);
+            //Comprobar resultado
+            if (!combate){
+                resultados[nCombate]= ("" + enemigoSeleccionado.getNombre() + " vs " + jugador.getNombre() + " | Derrota");
+                fin = true;
+            }else {
+                resultados[nCombate]= ("" + enemigoSeleccionado.getNombre() + " vs " + jugador.getNombre() + " | Victoria");
+            }
+
+            nCombate++;
+
+        }
+
+
+
 
 
         //TESTS
