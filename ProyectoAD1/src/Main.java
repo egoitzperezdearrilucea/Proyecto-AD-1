@@ -95,6 +95,9 @@ public class Main {
             }else {
                 System.out.println("");
                 resultados[nCombate]= ("" + enemigoSeleccionado.getNombre() + " vs " + jugador.getNombre() + " | Victoria");
+                if (enemigoSeleccionado.getNombre() == "Mister Random"){
+                    partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 100);
+                }
 
                 //Subir de nivel
                 jugador.setNivel(jugador.getNivel() + 1);
@@ -242,6 +245,7 @@ public class Main {
             for (int i = 0; i < enemigos.length; i++) {
                 System.out.println(i + "-" + enemigos[i].getNombre() + " | Vida: " + enemigos[i].getVida() + " | Ataque: " + enemigos[i].getAtaque());
             }
+            System.out.println(enemigos.length + "-Mister Random | Vida: ?? | Ataque: ??");
 
             //Recoger input
             opcion = br.readLine();
@@ -255,13 +259,21 @@ public class Main {
 
             if (seleccion !=-1){
 
-
-                if (Integer.parseInt(opcion) > enemigos.length-1 || Integer.parseInt(opcion) < 0 ){
+                if (seleccion > enemigos.length || seleccion < 0 ){
                     System.out.println("Input no valido");
                 }else{
-                    //Guardar seleccion
-                    resultado = enemigos[Integer.parseInt(opcion)];
-                    correcto = true;
+                    if (seleccion == enemigos.length){
+                        //Generar enemigo procedural
+                        resultado = new Enemigo("Mister Random", (int) (Math.random() * (500 - 10 + 1) + 10), (int) (Math.random() * (100 - 5 + 1) + 5));
+                        correcto = true;
+
+                    }else {
+                        //Guardar seleccion
+                        resultado = enemigos[seleccion];
+                        correcto = true;
+                    }
+
+
                 }
             }
         }
