@@ -80,6 +80,12 @@ public class Main {
         partida = new Partida(LocalDateTime.now(), jugador.getNombre());
 
 
+        //Seleccionar enemigo (falta)
+
+        //turno
+        Boolean combate = combate(jugador, enemigos[2]);
+
+
         //TESTS
         /*
         resultados[0]="Master False Ant vs Juanjo | victoria";
@@ -147,6 +153,88 @@ public class Main {
     }
 
     //Funciones
+
+    public static Boolean combate(Jugador jugador, Enemigo enemigo) throws IOException {
+        boolean fin = false;
+        boolean correcto = false;
+        boolean resultado = false;
+        int vidaJugador = jugador.getVida();
+        int vidaEnemigo = enemigo.getVida();
+        String opcion;
+
+        while (!fin) {
+            correcto=false;
+
+            //Turno jugador
+            while (!correcto) {
+                System.out.println("");
+                System.out.println("Turno jugador:");
+                System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
+                System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " | Ataque: " + jugador.getAtaque());
+
+                //Opciones turno
+                System.out.println("Accion:");
+                System.out.println("1-Atacar ("+ jugador.getAtaque() +" daño)");
+                System.out.println("2-Curar (+25 vida | " + jugador.getVida() + " max )");
+                opcion = br.readLine();
+
+                switch (opcion) {
+                    case ("1"): {
+                        vidaEnemigo = vidaEnemigo - jugador.getAtaque();
+                        System.out.println("Atacas al enemigo:");
+                        System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " (-" + jugador.getAtaque() + ") | Ataque: " + enemigo.getAtaque());
+                        System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " | Ataque: " + jugador.getAtaque());
+
+                        correcto = true;
+                    }
+                    break;
+
+                    case ("2"): {
+                        vidaJugador = vidaJugador + 25;
+                        if (vidaJugador > jugador.getVida()){
+                            vidaJugador = jugador.getVida();
+                        }
+
+                        System.out.println("Te curas:");
+                        System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
+                        System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (+25) | Ataque: " + jugador.getAtaque());
+
+                        correcto = true;
+                    }
+                    break;
+
+                    default: {
+                        System.out.println("no se entiende el input");
+                        correcto = false;
+                    }
+                }
+
+            }
+
+            //Comprobacion victoria
+            if (vidaEnemigo <= 0){
+                System.out.println("Victoria!");
+                fin = true;
+                resultado = true;
+            }else {
+
+                //Turno enemigo
+                vidaJugador = vidaJugador - enemigo.getAtaque();
+                System.out.println("");
+                System.out.println("Turno enmigo:");
+                System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
+                System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (-" + enemigo.getAtaque() +") | Ataque: " + jugador.getAtaque());
+
+                //Comprobacion derrota
+                if (vidaJugador <= 0){
+                    System.out.println("Derrota!");
+                    fin = true;
+                    resultado = false;
+                }
+            }
+        }
+        return resultado;
+    }
 
     public static Jugador crearJugador() throws IOException {
         String nombre;
