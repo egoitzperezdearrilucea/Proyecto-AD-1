@@ -4,7 +4,7 @@ import java.util.Date;
 public class Partida {
     //Variables
     LocalDateTime fecha;
-    int puntuacionTotal;
+    int puntuacionTotal = 0;
     String[] combates;
     String nombreJugador;
 

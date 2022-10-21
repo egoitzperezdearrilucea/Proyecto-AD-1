@@ -24,7 +24,6 @@ public class Main {
         Jugador jugador = null;
         Enemigo[] enemigos = new Enemigo[10];
         String[] resultados = new String[10];
-        int puntuacion = 0;
         String opcion;
         boolean correcto = false;
         boolean fin = false;
@@ -86,7 +85,7 @@ public class Main {
             Enemigo enemigoSeleccionado = enemigos[7];
 
             //turno
-            Boolean combate = combate(jugador, enemigoSeleccionado);
+            Boolean combate = combate(jugador, enemigoSeleccionado, partida);
 
             //Comprobar resultado
             if (!combate){
@@ -101,16 +100,6 @@ public class Main {
         }
 
 
-
-
-
-        //TESTS
-        /*
-        resultados[0]="Master False Ant vs Juanjo | victoria";
-        resultados[1]="The Greasy Barbarian vs Juanjo | victoria";
-        resultados[2]="Lord Molten Katana vs Juanjo | derrota";
-        puntuacion = 151;
-         */
 
         //Guardar datos partida
         int nCombates = 0;
@@ -127,7 +116,6 @@ public class Main {
         }
 
         partida.setCombates(combates);
-        partida.setPuntuacionTotal(puntuacion);
 
         //Mostrar resultados
         System.out.println("");
@@ -172,7 +160,7 @@ public class Main {
 
     //Funciones
 
-    public static Boolean combate(Jugador jugador, Enemigo enemigo) throws IOException {
+    public static Boolean combate(Jugador jugador, Enemigo enemigo, Partida partida) throws IOException {
         boolean fin = false;
         boolean correcto = false;
         boolean resultado = false;
@@ -203,6 +191,8 @@ public class Main {
                         System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " (-" + jugador.getAtaque() + ") | Ataque: " + enemigo.getAtaque());
                         System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " | Ataque: " + jugador.getAtaque());
 
+                        partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 10 );
+
                         correcto = true;
                     }
                     break;
@@ -216,6 +206,8 @@ public class Main {
                         System.out.println("Te curas:");
                         System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
                         System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (+25) | Ataque: " + jugador.getAtaque());
+
+                        partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 5 );
 
                         correcto = true;
                     }
@@ -232,6 +224,7 @@ public class Main {
             //Comprobacion victoria
             if (vidaEnemigo <= 0){
                 System.out.println("Victoria!");
+                partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 25 );
                 fin = true;
                 resultado = true;
             }else {
