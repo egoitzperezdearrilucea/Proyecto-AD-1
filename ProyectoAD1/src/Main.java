@@ -23,7 +23,7 @@ public class Main {
         Partida partida;
         Jugador jugador = null;
         Enemigo[] enemigos = new Enemigo[10];
-        String[] resultados = new String[10];
+        String[] resultados = new String[500];
         String opcion;
         boolean correcto = false;
         boolean fin = false;
@@ -89,10 +89,51 @@ public class Main {
 
             //Comprobar resultado
             if (!combate){
+                System.out.println("");
                 resultados[nCombate]= ("" + enemigoSeleccionado.getNombre() + " vs " + jugador.getNombre() + " | Derrota");
                 fin = true;
             }else {
+                System.out.println("");
                 resultados[nCombate]= ("" + enemigoSeleccionado.getNombre() + " vs " + jugador.getNombre() + " | Victoria");
+
+                //Subir de nivel
+                jugador.setNivel(jugador.getNivel() + 1);
+                System.out.println("Nivel: " + jugador.getNivel() + "(+1)");
+
+                if(jugador.getNivel()%5==0){
+
+                    correcto = false;
+                    while (!correcto){
+                        System.out.println("");
+                        System.out.println("Selecciona mejora:");
+                        System.out.println("1-Mejora vida (+10) | actual: " + jugador.getVida());
+                        System.out.println("2-Mejora ataque (+5) | actual: " + jugador.getAtaque());
+                        opcion = br.readLine();
+
+                        switch (opcion){
+                            case ("1"):{
+                                jugador.setVida(jugador.getVida() + 10);
+                                System.out.println("Vida: " + jugador.getVida());
+                                correcto = true;
+                            }break;
+
+                            case ("2"):{
+                                jugador.setAtaque(jugador.getAtaque() + 5);
+                                System.out.println("Ataque: " + jugador.getAtaque());
+                                correcto = true;
+                            }break;
+
+                            default: {
+                                System.out.println("no se entiende el input");
+                                correcto = false;
+                            }
+
+                        }
+                    }
+
+                }
+
+
             }
             nCombate++;
         }
