@@ -193,6 +193,37 @@ public class Main {
                 }
             }
         }
+
+        //Exportar jugador
+        correcto = false;
+        while (!correcto) {
+            System.out.println("");
+            System.out.println("Jugador: " + jugador.getNombre() + " | Nivel: " + jugador.getNivel() + " | Vida: " + jugador.getVida() + " | Ataque: " + jugador.getAtaque());
+            System.out.println("Desea exportar el jugador?");
+            System.out.println("1-No");
+            System.out.println("2-Si");
+            opcion=br.readLine();
+
+            switch (opcion) {
+                case ("1"): {
+
+                    correcto = true;
+                }
+                break;
+
+                case ("2"): {
+                    exportarJugadorDAT(jugador);
+                    exportarJugadorXML(jugador);
+                    correcto = true;
+                }
+                break;
+
+                default: {
+                    System.out.println("no se entiende el input");
+                    correcto = false;
+                }
+            }
+        }
     }
 
     //Funciones
