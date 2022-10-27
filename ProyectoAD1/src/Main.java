@@ -22,29 +22,32 @@ public class Main {
         //Variables
         Partida partida;
         Jugador jugador = null;
-        Enemigo[] enemigos = new Enemigo[10];
+        Enemigo[] enemigos = null;
         String[] resultados = new String[500];
         String opcion;
         boolean correcto = false;
         boolean fin = false;
 
-        //Creacion de enemigos (Solo usar para crear .dat)
-        /*
-        enemigos[0] = new Enemigo("Master False Ant", 50, 5);
-        enemigos[1] = new Enemigo("The Greasy Barbarian", 50, 10);
-        enemigos[2] = new Enemigo("Lord Molten Katana", 100, 5);
-        enemigos[3] = new Enemigo("The Puzzling Devil", 100, 5);
-        enemigos[4] = new Enemigo("Doctor Light Spectacle", 100, 10);
-        enemigos[5] = new Enemigo("Doctor Black Smasher", 100, 10);
-        enemigos[6] = new Enemigo("The Mute Swine", 100, 20);
-        enemigos[7] = new Enemigo("Doctor Genius", 150, 20);
-        enemigos[8] = new Enemigo("Professor Dark Arsonist", 150, 25);
-        enemigos[9] = new Enemigo("Nuclear Macaw", 200, 25);
-        exportarEnemigosDAT(enemigos);
-         */
 
         //Importar enemigos
-        enemigos = importarEnemigosDAT();
+        enemigos = Enemigo.importarEnemigosDAT();
+        if (enemigos == null){
+            //Creacion de enemigos (Solo usar para crear .dat)
+
+            System.out.println("Generando enemigos");
+            enemigos = new Enemigo[10];
+            enemigos[0] = new Enemigo("Master False Ant", 50, 5);
+            enemigos[1] = new Enemigo("The Greasy Barbarian", 50, 10);
+            enemigos[2] = new Enemigo("Lord Molten Katana", 100, 5);
+            enemigos[3] = new Enemigo("The Puzzling Devil", 100, 5);
+            enemigos[4] = new Enemigo("Doctor Light Spectacle", 100, 10);
+            enemigos[5] = new Enemigo("Doctor Black Smasher", 100, 10);
+            enemigos[6] = new Enemigo("The Mute Swine", 100, 20);
+            enemigos[7] = new Enemigo("Doctor Genius", 150, 20);
+            enemigos[8] = new Enemigo("Professor Dark Arsonist", 150, 25);
+            enemigos[9] = new Enemigo("Nuclear Macaw", 200, 25);
+            Enemigo.exportarEnemigosDAT(enemigos);
+        }
 
         //Opciones jugador
         correcto = false;
@@ -62,8 +65,13 @@ public class Main {
                 }break;
 
                 case ("2"):{
-                    jugador = importarJugadorDAT();
-                    correcto = true;
+                    jugador = Jugador.importarJugadorDAT();
+                    if (jugador != null){
+                        correcto = true;
+                    }else {
+                        correcto = false;
+                    }
+
                 }break;
 
                 default: {
@@ -74,7 +82,7 @@ public class Main {
             }
         }
 
-        System.out.println("Jugador cargado: " + jugador.getNombre());
+            System.out.println("Jugador cargado: " + jugador.getNombre());
 
         //Crear partida
         partida = new Partida(LocalDateTime.now(), jugador.getNombre());
@@ -185,7 +193,7 @@ public class Main {
                 break;
 
                 case ("2"): {
-                    exportarPartidaXML(partida);
+                    Partida.exportarPartidaXML(partida);
                     correcto = true;
                 }
                 break;
@@ -215,8 +223,8 @@ public class Main {
                 break;
 
                 case ("2"): {
-                    exportarJugadorDAT(jugador);
-                    exportarJugadorXML(jugador);
+                    Jugador.exportarJugadorDAT(jugador);
+                    Jugador.exportarJugadorXML(jugador);
                     correcto = true;
                 }
                 break;
@@ -352,7 +360,7 @@ public class Main {
                 //Turno enemigo
                 vidaJugador = vidaJugador - enemigo.getAtaque();
                 System.out.println("");
-                System.out.println("Turno enmigo:");
+                System.out.println("El enemigo te ataca:");
                 System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
                 System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (-" + enemigo.getAtaque() +") | Ataque: " + jugador.getAtaque());
 
@@ -367,7 +375,7 @@ public class Main {
         return resultado;
     }
 
-    public static Jugador crearJugador() throws IOException {
+    public static Jugador crearJugador() throws IOException, ClassNotFoundException {
         String nombre;
         String opcion = null;
         Boolean correcto = false;
@@ -396,8 +404,8 @@ public class Main {
                 break;
 
                 case ("2"): {
-                    exportarJugadorDAT(jugador);
-                    exportarJugadorXML(jugador);
+                    Jugador.exportarJugadorDAT(jugador);
+                    Jugador.exportarJugadorXML(jugador);
                     correcto = true;
                 }
                 break;
@@ -411,92 +419,6 @@ public class Main {
 
         return jugador;
 
-    }
-
-
-    //Importar datos
-    public static Jugador importarJugadorDAT() throws IOException, ClassNotFoundException {
-
-        File fichero = new File ("./src/Jugador.dat");
-
-        FileInputStream filein = new FileInputStream(fichero);
-        ObjectInputStream dataIS = new ObjectInputStream(filein);
-
-        Jugador  jugador = (Jugador) dataIS.readObject();
-
-        System.out.println("");
-        System.out.println("Datos cargados de el jugador:");
-        System.out.println("Nombre:" + jugador.getNombre());
-        System.out.println("Nivel:" + jugador.getNivel());
-        System.out.println("Vida:" + jugador.getVida());
-        System.out.println("Ataque:" + jugador.getAtaque());
-        return jugador;
-    }
-
-    public static Enemigo[] importarEnemigosDAT() throws IOException, ClassNotFoundException {
-
-        File fichero = new File ("./src/Enemigos.dat");
-
-        FileInputStream filein = new FileInputStream(fichero);
-        ObjectInputStream dataIS = new ObjectInputStream(filein);
-
-        Enemigo[] enemigos = new Enemigo[10];
-
-        for (int i = 0; i < 10; i++) {
-
-            enemigos[i] = (Enemigo) dataIS.readObject();
-
-        }
-        return enemigos;
-    }
-
-
-    //Exportar datos
-
-    public static void exportarEnemigosDAT(Enemigo[] enemigos) throws IOException {
-
-        File fichero = new File ("./src/Enemigos.dat");
-        FileOutputStream fileout = new FileOutputStream(fichero);
-        ObjectOutputStream dataOS = new ObjectOutputStream(fileout);
-
-        for (int i = 0; i < enemigos.length; i++) {
-            dataOS.writeObject(enemigos[i]);
-        }
-
-    }
-
-    public static void exportarJugadorDAT(Jugador jugador) throws IOException {
-
-        File fichero = new File ("./src/Jugador.dat");
-        FileOutputStream fileout = new FileOutputStream(fichero);
-        ObjectOutputStream dataOS = new ObjectOutputStream(fileout);
-
-        dataOS.writeObject(jugador);
-
-    }
-
-    public static void exportarJugadorXML(Jugador jugador) throws FileNotFoundException {
-
-        try {
-            XStream xstream = new XStream();
-            //cambiar de nombre a las etiquetas XML
-            xstream.alias("jugador", Jugador.class);
-            //Insrtar los objetos en el XML
-            xstream.toXML(jugador, new FileOutputStream("./src/Jugador.xml"));
-        }catch (Exception e)
-        {e.printStackTrace();}
-    }
-
-    public static void exportarPartidaXML(Partida partida) throws FileNotFoundException {
-
-        try {
-            XStream xstream = new XStream();
-            //cambiar de nombre a las etiquetas XML
-            xstream.alias("partida", Partida.class);
-            //Insrtar los objetos en el XML
-            xstream.toXML(partida, new FileOutputStream("./src/Partida_"+ LocalDateTime.now() +".xml"));
-        }catch (Exception e)
-        {e.printStackTrace();}
     }
 
 }
