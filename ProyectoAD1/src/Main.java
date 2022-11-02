@@ -238,7 +238,6 @@ public class Main {
     }
 
     //Funciones
-
     public static Enemigo seleccionarEnemigo(Enemigo[] enemigos) throws IOException {
         boolean correcto = false;
         String opcion;
