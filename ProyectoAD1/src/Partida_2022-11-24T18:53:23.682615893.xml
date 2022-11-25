@@ -1,0 +1,15 @@
+<partida>
+  <fecha>2022-11-24T18:52:39.567856038</fecha>
+  <puntuacionTotal>65</puntuacionTotal>
+  <combates>
+    <combate numero="1" resultado="Victoria">
+      <jugador nivel="0" >PotatoMan777</jugador>
+      <enemigo>Master False Ant</enemigo>
+    </combate>
+    <combate numero="2" resultado="Derrota">
+      <jugador nivel="1">PotatoMan777</jugador>
+      <enemigo>Mister Random</enemigo>
+    </combate>
+  </combates>
+  <nombreJugador>PotatoMan777</nombreJugador>
+</partida>

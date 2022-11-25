@@ -1,0 +1,39 @@
+<partida>
+  <fecha>2022-11-25T20:45:40.845994358</fecha>
+  <puntuacionTotal>375</puntuacionTotal>
+  <combates>
+    <Combate resultado="Victoria" numero="0">
+      <jugador>Paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="1">
+      <jugador>Paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="2">
+      <jugador>Paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="3">
+      <jugador>Paco</jugador>
+      <enemigo>Doctor Black Smasher</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="4">
+      <jugador>Paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="5">
+      <jugador>Paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="6">
+      <jugador>Paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Derrota" numero="7">
+      <jugador>Paco</jugador>
+      <enemigo>Mister Random</enemigo>
+    </Combate>
+  </combates>
+  <nombreJugador>Paco</nombreJugador>
+</partida>

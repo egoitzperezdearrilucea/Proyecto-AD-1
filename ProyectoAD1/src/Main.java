@@ -23,7 +23,7 @@ public class Main {
         Partida partida;
         Jugador jugador = null;
         Enemigo[] enemigos = null;
-        String[] resultados = new String[500];
+        Combate[] resultados = new Combate[500];
         String opcion;
         boolean correcto = false;
         boolean fin = false;
@@ -98,11 +98,11 @@ public class Main {
             //Comprobar resultado
             if (!combate){
                 System.out.println("");
-                resultados[nCombate]= ("" + enemigoSeleccionado.getNombre() + " vs " + jugador.getNombre() + " | Derrota");
+                resultados[nCombate]= new Combate(jugador.getNombre(), enemigoSeleccionado.getNombre(), "Derrota", nCombate);
                 fin = true;
             }else {
                 System.out.println("");
-                resultados[nCombate]= ("" + enemigoSeleccionado.getNombre() + " vs " + jugador.getNombre() + " | Victoria");
+                resultados[nCombate]= new Combate(jugador.getNombre(), enemigoSeleccionado.getNombre(), "Victoria", nCombate);
                 if (enemigoSeleccionado.getNombre() == "Mister Random"){
                     partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 100);
                 }
@@ -157,10 +157,10 @@ public class Main {
             }
         }
 
-        String[] combates = new String[nCombates];
+        Combate[] combates = new Combate[nCombates];
 
         for (int i = 0; i < nCombates; i++) {
-                combates[i] = resultados[i];
+            combates[i] = resultados[i];
         }
 
         partida.setCombates(combates);
@@ -173,7 +173,7 @@ public class Main {
         System.out.println("Puntuacion: " + partida.getPuntuacionTotal());
         System.out.println("Combates:");
         for (int i = 0; i < partida.getCombates().length; i++) {
-            System.out.println(partida.getCombates()[i]);
+            System.out.println(i + "-" + partida.getCombates()[i].getJugador() + " vs " + partida.getCombates()[i].getEnemigo() + " | " + partida.getCombates()[i].getResultado());
         }
 
         //Opciones partida

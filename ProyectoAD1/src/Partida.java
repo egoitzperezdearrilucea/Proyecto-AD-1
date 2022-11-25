@@ -9,7 +9,7 @@ public class Partida {
     //Variables
     LocalDateTime fecha;
     int puntuacionTotal = 0;
-    String[] combates;
+    Combate[] combates;
     String nombreJugador;
 
     //Constructor
@@ -27,11 +27,11 @@ public class Partida {
         this.puntuacionTotal = puntuacionTotal;
     }
 
-    public String[] getCombates() {
+    public Combate[] getCombates() {
         return combates;
     }
 
-    public void setCombates(String[] combates) {
+    public void setCombates(Combate[] combates) {
         this.combates = combates;
     }
 
@@ -61,11 +61,48 @@ public class Partida {
             XStream xstream = new XStream();
             //cambiar de nombre a las etiquetas XML
             xstream.alias("partida", Partida.class);
-            //Insrtar los objetos en el XML
+
+            xstream.useAttributeFor(Combate.class, "numero");
+            xstream.aliasField("numero", Combate.class, "numero");
+
+            xstream.useAttributeFor(Combate.class, "resultado");
+            xstream.aliasField("resultado", Combate.class, "resultado");
+
+            //Insertar los objetos en el XML
             xstream.toXML(partida, new FileOutputStream("./src/Partida_"+ LocalDateTime.now() +".xml"));
 
             System.out.println("Partida exportada correctamente a 'Partida_"+ LocalDateTime.now() +".xml'");
         }catch (Exception e)
         {e.printStackTrace();}
+    }
+}
+
+class Combate{
+    String jugador;
+    String enemigo;
+    String resultado;
+    int numero;
+
+    public Combate(String jugador, String enemigo, String resultado, int numero) {
+        this.jugador = jugador;
+        this.enemigo = enemigo;
+        this.resultado = resultado;
+        this.numero = numero;
+    }
+
+    public String getJugador() {
+        return jugador;
+    }
+
+    public String getEnemigo() {
+        return enemigo;
+    }
+
+    public String getResultado() {
+        return resultado;
+    }
+
+    public int getNumero() {
+        return numero;
     }
 }
