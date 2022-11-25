@@ -5,12 +5,12 @@ import java.io.*;
 public class Jugador implements Serializable {
     //Variables
     String nombre;
-    int vida;
-    int ataque;
+    Vida vida;
+    Ataque ataque;
     int nivel;
 
     //Constructor
-    public Jugador(String nombre, int vida, int ataque, int nivel) {
+    public Jugador(String nombre, Vida vida, Ataque ataque, int nivel) {
         this.nombre = nombre;
         this.vida = vida;
         this.ataque = ataque;
@@ -27,21 +27,14 @@ public class Jugador implements Serializable {
         this.nombre = nombre;
     }
 
-    public int getVida() {
+    public Vida getVida() {
         return vida;
     }
 
-    public void setVida(int vida) {
-        this.vida = vida;
-    }
-
-    public int getAtaque() {
+    public Ataque getAtaque() {
         return ataque;
     }
 
-    public void setAtaque(int ataque) {
-        this.ataque = ataque;
-    }
 
     public int getNivel() {
         return nivel;
@@ -54,6 +47,7 @@ public class Jugador implements Serializable {
 
     //Importar datos
 
+    /*
     public static Jugador importarJugadorDAT() throws IOException, ClassNotFoundException {
 
         File fichero = new File ("./src/Jugador.dat");
@@ -79,8 +73,11 @@ public class Jugador implements Serializable {
         return jugador;
     }
 
+     */
+
     //Exportar datos
 
+    /*
     public static void exportarJugadorDAT(Jugador jugador) throws IOException, ClassNotFoundException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -135,6 +132,8 @@ public class Jugador implements Serializable {
         }
     }
 
+     */
+
     public static void exportarJugadorXML(Jugador jugador) throws FileNotFoundException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -164,7 +163,15 @@ public class Jugador implements Serializable {
                             XStream xstream = new XStream();
                             //cambiar de nombre a las etiquetas XML
                             xstream.alias("jugador", Jugador.class);
-                            //Insrtar los objetos en el XML
+
+
+                            xstream.useAttributeFor(Vida.class, "mejorasVida");
+                            xstream.aliasField("mejoras", Vida.class, "mejorasVida");
+
+                            xstream.useAttributeFor(Ataque.class, "mejorasAtaque");
+                            xstream.aliasField("mejoras", Ataque.class, "mejorasAtaque");
+
+                            //Insertar los objetos en el XML
                             xstream.toXML(jugador, new FileOutputStream("./src/Jugador.xml"));
 
                             System.out.println("Jugador exportado correctamente a 'Jugador.xml'");
@@ -192,8 +199,56 @@ public class Jugador implements Serializable {
         }catch (Exception e)
         {e.printStackTrace();}
     }
+}
 
+class Vida{
+    int puntosVida;
+    int mejorasVida;
 
+    public Vida(int puntosVida, int mejorasVida) {
+        this.puntosVida = puntosVida;
+        this.mejorasVida = mejorasVida;
+    }
 
+    public int getPuntosVida() {
+        return puntosVida;
+    }
 
+    public void setPuntosVida(int puntosVida) {
+        this.puntosVida = puntosVida;
+    }
+
+    public int getMejorasVida() {
+        return mejorasVida;
+    }
+
+    public void setMejorasVida(int mejorasVida) {
+        this.mejorasVida = mejorasVida;
+    }
+}
+
+class Ataque{
+    int puntosAtaque;
+    int mejorasAtaque;
+
+    public Ataque(int puntosAtaque, int mejorasAtaque) {
+        this.puntosAtaque = puntosAtaque;
+        this.mejorasAtaque = mejorasAtaque;
+    }
+
+    public int getPuntosAtaque() {
+        return puntosAtaque;
+    }
+
+    public void setPuntosAtaque(int puntosAtaque) {
+        this.puntosAtaque = puntosAtaque;
+    }
+
+    public int getMejorasAtaque() {
+        return mejorasAtaque;
+    }
+
+    public void setMejorasAtaque(int mejorasAtaque) {
+        this.mejorasAtaque = mejorasAtaque;
+    }
 }

@@ -1,14 +1,3 @@
-import com.thoughtworks.xstream.XStream;
-import org.w3c.dom.DOMImplementation;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.time.LocalDateTime;
 
@@ -65,7 +54,7 @@ public class Main {
                 }break;
 
                 case ("2"):{
-                    jugador = Jugador.importarJugadorDAT();
+                   // jugador = Jugador.importarJugadorDAT();
                     if (jugador != null){
                         correcto = true;
                     }else {
@@ -117,20 +106,22 @@ public class Main {
                     while (!correcto){
                         System.out.println("");
                         System.out.println("Selecciona mejora:");
-                        System.out.println("1-Mejora vida (+10) | actual: " + jugador.getVida());
-                        System.out.println("2-Mejora ataque (+5) | actual: " + jugador.getAtaque());
+                        System.out.println("1-Mejora vida (+10) | actual: " + jugador.getVida().getPuntosVida());
+                        System.out.println("2-Mejora ataque (+5) | actual: " + jugador.getAtaque().getPuntosAtaque());
                         opcion = br.readLine();
 
                         switch (opcion){
                             case ("1"):{
-                                jugador.setVida(jugador.getVida() + 10);
-                                System.out.println("Vida: " + jugador.getVida());
+                                jugador.getVida().setPuntosVida(jugador.getVida().getPuntosVida() + 10);
+                                jugador.getVida().setMejorasVida(jugador.getVida().getMejorasVida() + 1);
+                                System.out.println("Vida: " + jugador.getVida().getPuntosVida());
                                 correcto = true;
                             }break;
 
                             case ("2"):{
-                                jugador.setAtaque(jugador.getAtaque() + 5);
-                                System.out.println("Ataque: " + jugador.getAtaque());
+                                jugador.getAtaque().setPuntosAtaque(jugador.getAtaque().getPuntosAtaque() + 5);
+                                jugador.getAtaque().setMejorasAtaque(jugador.getAtaque().getMejorasAtaque() + 1);
+                                System.out.println("Ataque: " + jugador.getAtaque().getPuntosAtaque());
                                 correcto = true;
                             }break;
 
@@ -209,7 +200,7 @@ public class Main {
         correcto = false;
         while (!correcto) {
             System.out.println("");
-            System.out.println("Jugador: " + jugador.getNombre() + " | Nivel: " + jugador.getNivel() + " | Vida: " + jugador.getVida() + " | Ataque: " + jugador.getAtaque());
+            System.out.println("Jugador: " + jugador.getNombre() + " | Nivel: " + jugador.getNivel() + " | Vida: " + jugador.getVida().getPuntosVida() + " | Ataque: " + jugador.getAtaque().getPuntosAtaque());
             System.out.println("Desea exportar el jugador?");
             System.out.println("1-No");
             System.out.println("2-Si");
@@ -223,7 +214,7 @@ public class Main {
                 break;
 
                 case ("2"): {
-                    Jugador.exportarJugadorDAT(jugador);
+                    //Jugador.exportarJugadorDAT(jugador);
                     Jugador.exportarJugadorXML(jugador);
                     correcto = true;
                 }
@@ -291,7 +282,7 @@ public class Main {
         boolean fin = false;
         boolean correcto = false;
         boolean resultado = false;
-        int vidaJugador = jugador.getVida();
+        int vidaJugador = jugador.getVida().getPuntosVida();
         int vidaEnemigo = enemigo.getVida();
         String opcion;
 
@@ -303,20 +294,20 @@ public class Main {
                 System.out.println("");
                 System.out.println("Turno jugador:");
                 System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
-                System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " | Ataque: " + jugador.getAtaque());
+                System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " | Ataque: " + jugador.getAtaque().getPuntosAtaque());
 
                 //Opciones turno
                 System.out.println("Accion:");
-                System.out.println("1-Atacar ("+ jugador.getAtaque() +" daño)");
-                System.out.println("2-Curar (+25 vida | " + jugador.getVida() + " max )");
+                System.out.println("1-Atacar ("+ jugador.getAtaque().getPuntosAtaque() +" daño)");
+                System.out.println("2-Curar (+25 vida | " + jugador.getVida().getPuntosVida() + " max )");
                 opcion = br.readLine();
 
                 switch (opcion) {
                     case ("1"): {
-                        vidaEnemigo = vidaEnemigo - jugador.getAtaque();
+                        vidaEnemigo = vidaEnemigo - jugador.getAtaque().getPuntosAtaque();
                         System.out.println("Atacas al enemigo:");
-                        System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " (-" + jugador.getAtaque() + ") | Ataque: " + enemigo.getAtaque());
-                        System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " | Ataque: " + jugador.getAtaque());
+                        System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " (-" + jugador.getAtaque().getPuntosAtaque() + ") | Ataque: " + enemigo.getAtaque());
+                        System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " | Ataque: " + jugador.getAtaque().getPuntosAtaque());
 
                         partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 10 );
 
@@ -326,13 +317,13 @@ public class Main {
 
                     case ("2"): {
                         vidaJugador = vidaJugador + 25;
-                        if (vidaJugador > jugador.getVida()){
-                            vidaJugador = jugador.getVida();
+                        if (vidaJugador > jugador.getVida().getPuntosVida()){
+                            vidaJugador = jugador.getVida().getPuntosVida();
                         }
 
                         System.out.println("Te curas:");
                         System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
-                        System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (+25) | Ataque: " + jugador.getAtaque());
+                        System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (+25) | Ataque: " + jugador.getAtaque().getPuntosAtaque());
 
                         partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 5 );
 
@@ -361,7 +352,7 @@ public class Main {
                 System.out.println("");
                 System.out.println("El enemigo te ataca:");
                 System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
-                System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (-" + enemigo.getAtaque() +") | Ataque: " + jugador.getAtaque());
+                System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (-" + enemigo.getAtaque() +") | Ataque: " + jugador.getAtaque().getPuntosAtaque());
 
                 //Comprobacion derrota
                 if (vidaJugador <= 0){
@@ -382,11 +373,10 @@ public class Main {
         System.out.println("Nombre jugador:");
         nombre = br.readLine();
 
-        System.out.println("Vida = 100");
-        System.out.println("Ataque = 25");
+        Jugador jugador = new Jugador(nombre, new Vida(100,0), new Ataque(20,0), 0);
 
-        Jugador jugador = new Jugador(nombre, 100, 25, 0);
-
+        System.out.println("Vida = " + jugador.getVida().getPuntosVida());
+        System.out.println("Ataque = " + jugador.getAtaque().getPuntosAtaque());
 
         while (!correcto) {
             System.out.println("");
@@ -403,7 +393,7 @@ public class Main {
                 break;
 
                 case ("2"): {
-                    Jugador.exportarJugadorDAT(jugador);
+                    //Jugador.exportarJugadorDAT(jugador);
                     Jugador.exportarJugadorXML(jugador);
                     correcto = true;
                 }

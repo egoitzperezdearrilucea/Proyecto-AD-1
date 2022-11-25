@@ -1,0 +1,71 @@
+<partida>
+  <fecha>2022-11-25T21:32:41.134789319</fecha>
+  <puntuacionTotal>775</puntuacionTotal>
+  <combates>
+    <Combate resultado="Victoria" numero="0">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="1">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="2">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="3">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="4">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="5">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="6">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="7">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="8">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="9">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="10">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="11">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="12">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="13">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="14">
+      <jugador>paco</jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Derrota" numero="15">
+      <jugador>paco</jugador>
+      <enemigo>Nuclear Macaw</enemigo>
+    </Combate>
+  </combates>
+  <nombreJugador>paco</nombreJugador>
+</partida>

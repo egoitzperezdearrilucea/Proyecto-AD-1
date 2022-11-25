@@ -1,0 +1,11 @@
+<partida>
+  <fecha>2022-11-25T21:07:01.653520514</fecha>
+  <puntuacionTotal>20</puntuacionTotal>
+  <combates>
+    <Combate resultado="Derrota" numero="0">
+      <jugador>Juanjo</jugador>
+      <enemigo>Mister Random</enemigo>
+    </Combate>
+  </combates>
+  <nombreJugador>Juanjo</nombreJugador>
+</partida>
