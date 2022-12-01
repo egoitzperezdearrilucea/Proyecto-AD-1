@@ -134,7 +134,7 @@ public class Jugador implements Serializable {
 
      */
 
-    public static void exportarJugadorXML(Jugador jugador) throws FileNotFoundException {
+    public static void exportarJugadorXML(Jugador jugador) {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         try {

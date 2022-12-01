@@ -39,21 +39,35 @@ public class Enemigo implements Serializable {
     }
 
     //Importar datos
-    public static Enemigo[] importarEnemigosDAT() throws IOException, ClassNotFoundException {
+    public static Enemigo[] importarEnemigosDAT() {
         Enemigo[] enemigos = null;
 
         File fichero = new File("./src/Enemigos.dat");
 
 
         if (fichero.exists()) {
-            FileInputStream filein = new FileInputStream(fichero);
-            ObjectInputStream dataIS = new ObjectInputStream(filein);
+            ObjectInputStream dataIS = null;
+            try {
+                FileInputStream filein = new FileInputStream(fichero);
+                dataIS = new ObjectInputStream(filein);
+            } catch (IOException e) {
+                System.out.println("Error: general");
+                throw new RuntimeException(e);
+            }
 
             enemigos = new Enemigo[10];
 
             for (int i = 0; i < 10; i++) {
 
-                enemigos[i] = (Enemigo) dataIS.readObject();
+                try {
+                    enemigos[i] = (Enemigo) dataIS.readObject();
+                } catch (IOException e) {
+                    System.out.println("Error: general");
+                    throw new RuntimeException(e);
+                } catch (ClassNotFoundException e) {
+                    System.out.println("Error: no se encuentra la clase dataIS");
+                    throw new RuntimeException(e);
+                }
 
             }
         } else {
@@ -66,14 +80,25 @@ public class Enemigo implements Serializable {
 
     //Exportar datos
 
-    public static void exportarEnemigosDAT(Enemigo[] enemigos) throws IOException {
+    public static void exportarEnemigosDAT(Enemigo[] enemigos) {
 
         File fichero = new File ("./src/Enemigos.dat");
-        FileOutputStream fileout = new FileOutputStream(fichero);
-        ObjectOutputStream dataOS = new ObjectOutputStream(fileout);
+        ObjectOutputStream dataOS = null;
+        try {
+            FileOutputStream fileout = new FileOutputStream(fichero);
+            dataOS = new ObjectOutputStream(fileout);
+        } catch (IOException e) {
+            System.out.println("Error: general");
+            throw new RuntimeException(e);
+        }
 
         for (int i = 0; i < enemigos.length; i++) {
-            dataOS.writeObject(enemigos[i]);
+            try {
+                dataOS.writeObject(enemigos[i]);
+            } catch (IOException e) {
+                System.out.println("Error: general");
+                throw new RuntimeException(e);
+            }
         }
 
 

@@ -54,7 +54,7 @@ public class Partida {
 
     //Exportar Partida
 
-    public static void exportarPartidaXML(Partida partida) throws FileNotFoundException {
+    public static void exportarPartidaXML(Partida partida) {
 
         try {
 
