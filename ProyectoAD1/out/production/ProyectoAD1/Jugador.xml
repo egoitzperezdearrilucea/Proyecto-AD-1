@@ -1,12 +1,10 @@
 <jugador>
-  <nombre>1</nombre>
-  <vida>
-    <puntosVida>110</puntosVida>
-    <mejorasVida>1</mejorasVida>
+  <nombre>paco</nombre>
+  <vida mejoras="2">
+    <puntosVida>120</puntosVida>
   </vida>
-  <ataque>
+  <ataque mejoras="1">
     <puntosAtaque>25</puntosAtaque>
-    <mejorasAtaque>1</mejorasAtaque>
   </ataque>
-  <nivel>10</nivel>
+  <nivel>15</nivel>
 </jugador>

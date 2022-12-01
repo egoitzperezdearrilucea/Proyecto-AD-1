@@ -2,6 +2,24 @@ import java.io.*;
 import java.time.LocalDateTime;
 
 
+/*
+
+¡¡¡¡¡¡Control de errores mensajes custom!!!!!!!!
+
+
+ */
+
+
+
+
+
+
+
+
+
+
+
+
 public class Main {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,6 +35,8 @@ public class Main {
         boolean correcto = false;
         boolean fin = false;
 
+        //Conexion BBDD
+        Consultas.conectar();
 
         //Importar enemigos
         enemigos = Enemigo.importarEnemigosDAT();
