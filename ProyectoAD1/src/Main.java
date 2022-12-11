@@ -18,7 +18,8 @@ public class Main {
 
         //Conexion BBDD
         Consultas.conectar();
-        Consultas.mostrarJugadores();
+        //Consultas.mostrarJugadores();
+        Consultas.mostrarPartidas();
 
         //Importar enemigos
 

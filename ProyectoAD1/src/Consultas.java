@@ -75,4 +75,34 @@ public class Consultas {
         }
         return true;
     }
+
+
+    public static boolean mostrarPartidas () {
+        if (conectar() != null) {
+            try {
+                XPathQueryService servicio;
+                servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+                //Preparamos la consulta
+                ResourceSet result = servicio.query("/partidas/partida/concat(\"Fecha: \",fecha, \"| Puntuacion: \", puntuacionTotal)");
+                // recorrer los datos del recurso.
+                ResourceIterator i;
+                i = result.getIterator();
+                if (!i.hasMoreResources()) {
+                    System.out.println(" Error:la consulta no retorna valores");
+                }
+                while (i.hasMoreResources()) {
+                    Resource r = i.nextResource();
+                    System.out.println("");
+                    System.out.println((String) r.getContent());
+                }
+                col.close();
+            } catch (XMLDBException e) {
+                System.out.println(" Error: el documento no se pudo consultar");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error: la conexion esta mal");
+        }
+        return true;
+    }
 }
