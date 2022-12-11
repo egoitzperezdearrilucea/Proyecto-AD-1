@@ -1,6 +1,10 @@
 <jugador>
   <nombre>PotatoMan777</nombre>
-  <vida mejoras ="0">100</vida>
-  <ataque mejoras ="1">30</ataque>
+  <vida mejoras ="0">
+    <puntosVida>100</puntosVida>
+  </vida>
+  <ataque mejoras ="1">
+    <puntosAtaqe>30</puntosAtaqe>
+  </ataque>
   <nivel>1</nivel>
 </jugador>
