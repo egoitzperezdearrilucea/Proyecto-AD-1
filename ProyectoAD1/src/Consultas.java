@@ -121,11 +121,11 @@ public class Consultas {
         if (conectar() != null) {
             try {
                 XPathQueryService servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-                System.out.printf("Inserto: %s \n", nuevojugador);
+                //System.out.printf("Inserto: %s \n", nuevojugador);
                 //Consulta para insertar --> update insert ... into
                 ResourceSet result = servicio.query("update insert " + nuevojugador + " into /jugadores");
                 col.close(); //borramos
-                System.out.println("jugador insertado.");
+                System.out.println("Jugador insertado.");
             } catch (Exception e) {
                 System.out.println("Error: al insertar al jugador.");
                 e.printStackTrace();
@@ -136,6 +136,39 @@ public class Consultas {
     }
 
 
+    public static void guardarPartida (Partida partida) {
+        
+        String combates = "<combates>";
+        for (int i = 0; i < partida.getCombates().length; i++) {
+            combates = combates + "<combate numero=\"" + partida.getCombates()[i].getNumero()+ "\" resultado=\"" + partida.getCombates()[i].getResultado() + "\">";
+            combates = combates + "<jugador nivel=\"" + partida.getCombates()[i].getJugador().getNivel() + "\">" + partida.getCombates()[i].getJugador().getNombre() + "</jugador>";
+            combates = combates + "<enemigo>"+ partida.getCombates()[i].getEnemigo() +"</enemigo>";
+            combates = combates + "</combate>";
+        }
+        combates = combates + "</combates>";
+
+        System.out.print(combates);
+        String nuevaPartida = "<partida><fecha>" + partida.getFecha() + "</fecha><puntuacionTotal>"+partida.getPuntuacionTotal()+"</puntuacionTotal>" + combates + "<nombreJugador>" + partida.getNombreJugador() + "</nombreJugador></partida>";
+
+        if (conectar() != null) {
+            try {
+                XPathQueryService servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+                System.out.printf("Inserto: %s \n", nuevaPartida);
+                //Consulta para insertar --> update insert ... into
+                ResourceSet result = servicio.query("update insert " + nuevaPartida + " into /partidas");
+                col.close(); //borramos
+                System.out.println("Partida insertada.");
+            } catch (Exception e) {
+                System.out.println("Error: al insertar la partida.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error: en la conexión. Comprueba datos.");
+        }
+
+
+    }
+     
 
 
 

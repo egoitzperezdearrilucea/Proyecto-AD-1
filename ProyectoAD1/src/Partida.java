@@ -68,6 +68,9 @@ public class Partida {
             xstream.useAttributeFor(Combate.class, "resultado");
             xstream.aliasField("resultado", Combate.class, "resultado");
 
+            xstream.useAttributeFor(Jugador.class, "nivel");
+            xstream.aliasField("nivel", Combate.class, "nivel");
+
             //Insertar los objetos en el XML
             xstream.toXML(partida, new FileOutputStream("./src/Partida_"+ LocalDateTime.now() +".xml"));
 
@@ -78,19 +81,19 @@ public class Partida {
 }
 
 class Combate{
-    String jugador;
+    Jugador jugador;
     String enemigo;
     String resultado;
     int numero;
 
-    public Combate(String jugador, String enemigo, String resultado, int numero) {
+    public Combate(Jugador jugador, String enemigo, String resultado, int numero) {
         this.jugador = jugador;
         this.enemigo = enemigo;
         this.resultado = resultado;
         this.numero = numero;
     }
 
-    public String getJugador() {
+    public Jugador getJugador() {
         return jugador;
     }
 

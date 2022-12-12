@@ -21,7 +21,8 @@ public class Main {
             System.out.println("2-Ver partidas almacenadas");
             System.out.println("3-Ver jugadores almacenados");
             System.out.println("4-Guardar jugador");
-            System.out.println("5-Salir");
+            System.out.println("5-Guardar partida");
+            System.out.println("6-Salir");
 
             try {
                 opcion = br.readLine();
@@ -32,7 +33,7 @@ public class Main {
 
             switch (opcion){
                 case ("1"):{
-                    partida();
+                    jugar();
                 }break;
 
                 case ("2"):{
@@ -48,6 +49,10 @@ public class Main {
                 }break;
 
                 case ("5"):{
+                    Consultas.guardarPartida(new Partida(LocalDateTime.now(), crearJugador().getNombre()));
+                }break;
+
+                case ("6"):{
                     System.out.println("adios");
                     fin = true;
                 }break;
@@ -64,7 +69,7 @@ public class Main {
 
     //Funciones
 
-    public static void partida() {
+    public static void jugar() {
         //Variables
         Partida partida;
         Jugador jugador = null;
@@ -154,11 +159,11 @@ public class Main {
             //Comprobar resultado
             if (!combate){
                 System.out.println("");
-                resultados[nCombate]= new Combate(jugador.getNombre(), enemigoSeleccionado.getNombre(), "Derrota", nCombate);
+                resultados[nCombate]= new Combate(jugador, enemigoSeleccionado.getNombre(), "Derrota", nCombate);
                 fin = true;
             }else {
                 System.out.println("");
-                resultados[nCombate]= new Combate(jugador.getNombre(), enemigoSeleccionado.getNombre(), "Victoria", nCombate);
+                resultados[nCombate]= new Combate(jugador, enemigoSeleccionado.getNombre(), "Victoria", nCombate);
                 if (enemigoSeleccionado.getNombre() == "Mister Random"){
                     partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 100);
                 }
@@ -236,7 +241,7 @@ public class Main {
         System.out.println("Puntuacion: " + partida.getPuntuacionTotal());
         System.out.println("Combates:");
         for (int i = 0; i < partida.getCombates().length; i++) {
-            System.out.println(i + "-" + partida.getCombates()[i].getJugador() + " vs " + partida.getCombates()[i].getEnemigo() + " | " + partida.getCombates()[i].getResultado());
+            System.out.println(i + "-" + partida.getCombates()[i].getJugador().getNombre() + " vs " + partida.getCombates()[i].getEnemigo() + " | " + partida.getCombates()[i].getResultado());
         }
 
         //Opciones partida
@@ -258,6 +263,7 @@ public class Main {
                     break;
 
                     case ("2"): {
+                        Consultas.guardarPartida(partida);
                         Partida.exportarPartidaXML(partida);
                         correcto = true;
                     }

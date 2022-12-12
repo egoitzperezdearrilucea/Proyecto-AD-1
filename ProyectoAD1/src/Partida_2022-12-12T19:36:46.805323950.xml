@@ -1,0 +1,29 @@
+<partida>
+  <fecha>2022-12-12T19:36:23.885250114</fecha>
+  <puntuacionTotal>170</puntuacionTotal>
+  <combates>
+    <Combate resultado="Victoria" numero="0">
+      <jugador nivel="2">
+        <nombre>markosgamer</nombre>
+        <vida>
+          <puntosVida>100</puntosVida>
+          <mejorasVida>0</mejorasVida>
+        </vida>
+        <ataque>
+          <puntosAtaque>20</puntosAtaque>
+          <mejorasAtaque>0</mejorasAtaque>
+        </ataque>
+      </jugador>
+      <enemigo>The Greasy Barbarian</enemigo>
+    </Combate>
+    <Combate resultado="Victoria" numero="1">
+      <jugador reference="../../Combate/jugador"/>
+      <enemigo>Doctor Black Smasher</enemigo>
+    </Combate>
+    <Combate resultado="Derrota" numero="2">
+      <jugador reference="../../Combate/jugador"/>
+      <enemigo>Professor Dark Arsonist</enemigo>
+    </Combate>
+  </combates>
+  <nombreJugador>markosgamer</nombreJugador>
+</partida>
