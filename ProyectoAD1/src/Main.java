@@ -20,7 +20,8 @@ public class Main {
             System.out.println("1-Jugar");
             System.out.println("2-Ver partidas almacenadas");
             System.out.println("3-Ver jugadores almacenados");
-            System.out.println("4-Salir");
+            System.out.println("4-Guardar jugador");
+            System.out.println("5-Salir");
 
             try {
                 opcion = br.readLine();
@@ -43,6 +44,10 @@ public class Main {
                 }break;
 
                 case ("4"):{
+                    Consultas.guardarJugador(crearJugador());
+                }break;
+
+                case ("5"):{
                     System.out.println("adios");
                     fin = true;
                 }break;

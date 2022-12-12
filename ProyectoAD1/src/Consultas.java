@@ -113,4 +113,30 @@ public class Consultas {
         }
         return true;
     }
+
+    public static void guardarJugador (Jugador jugador) {
+
+        String nuevojugador = "<jugador><nombre>" + jugador.getNombre() + "</nombre><vida mejoras= \"" + jugador.getVida().getMejorasVida() + "\"><puntosVida>" + jugador.getVida().getPuntosVida() + "</puntosVida></vida><ataque mejoras=\"" + jugador.getAtaque().getMejorasAtaque() + "\"><puntosAtaque>" + jugador.getAtaque().getPuntosAtaque() + "</puntosAtaque></ataque></jugador>";
+
+        if (conectar() != null) {
+            try {
+                XPathQueryService servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+                System.out.printf("Inserto: %s \n", nuevojugador);
+                //Consulta para insertar --> update insert ... into
+                ResourceSet result = servicio.query("update insert " + nuevojugador + " into /jugadores");
+                col.close(); //borramos
+                System.out.println("jugador insertado.");
+            } catch (Exception e) {
+                System.out.println("Error: al insertar al jugador.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error: en la conexión. Comprueba datos.");
+        }
+    }
+
+
+
+
+
 }
