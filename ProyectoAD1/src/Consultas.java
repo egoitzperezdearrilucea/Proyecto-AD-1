@@ -2,6 +2,9 @@ import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XPathQueryService;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 
 
@@ -116,7 +119,7 @@ public class Consultas {
 
     public static void guardarJugador (Jugador jugador) {
 
-        String nuevojugador = "<jugador><nombre>" + jugador.getNombre() + "</nombre><vida mejoras= \"" + jugador.getVida().getMejorasVida() + "\"><puntosVida>" + jugador.getVida().getPuntosVida() + "</puntosVida></vida><ataque mejoras=\"" + jugador.getAtaque().getMejorasAtaque() + "\"><puntosAtaque>" + jugador.getAtaque().getPuntosAtaque() + "</puntosAtaque></ataque></jugador>";
+        String nuevojugador = "<jugador><nombre>" + jugador.getNombre() + "</nombre><vida mejoras= \"" + jugador.getVida().getMejorasVida() + "\"><puntosVida>" + jugador.getVida().getPuntosVida() + "</puntosVida></vida><ataque mejoras=\"" + jugador.getAtaque().getMejorasAtaque() + "\"><puntosAtaque>" + jugador.getAtaque().getPuntosAtaque() + "</puntosAtaque></ataque><nivel>" + jugador.getNivel() + "</nivel></jugador>";
 
         if (conectar() != null) {
             try {
@@ -169,7 +172,34 @@ public class Consultas {
 
     }
      
+    public static void modificarJugador() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        if (conectar() != null) {
+            mostrarJugadores();
+            System.out.println("Nombre jugador a editar:");
+            String nombre = br.readLine();
+            System.out.println("Columna a editar:");
+            String columna = br.readLine();
+            System.out.println("valor nuevo:");
+            String valor = br.readLine();
+            try {
+                System.out.printf("Actualizo el jugador: %s\n", nombre);
+                XPathQueryService servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+                //Consulta para modificar/actualizar un valor --> update value
+                ResourceSet result = servicio.query(
+                        //"update value /jugadores/jugador[nombre=" + nombre + "]/" + columna + "with data(" + valor + ") ");
+                        "update value /jugadores/jugador[nombre = \"" + nombre + "\"]/nivel with " + valor);
 
+                col.close();
+                System.out.println("Jugador actualizado.");
+            } catch (Exception e) {
+                System.out.println("Error al actualizar.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error en la conexión. Comprueba datos.");
+        }
+    }
 
 
 }

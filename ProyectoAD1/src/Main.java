@@ -5,7 +5,7 @@ public class Main {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         //Conexion BBDD
         Consultas.conectar();
@@ -22,7 +22,8 @@ public class Main {
             System.out.println("3-Ver jugadores almacenados");
             System.out.println("4-Guardar jugador");
             System.out.println("5-Guardar partida");
-            System.out.println("6-Salir");
+            System.out.println("6-Modificar jugador");
+            System.out.println("7-Salir");
 
             try {
                 opcion = br.readLine();
@@ -53,6 +54,10 @@ public class Main {
                 }break;
 
                 case ("6"):{
+                    Consultas.modificarJugador();
+                }break;
+
+                case ("7"):{
                     System.out.println("adios");
                     fin = true;
                 }break;
