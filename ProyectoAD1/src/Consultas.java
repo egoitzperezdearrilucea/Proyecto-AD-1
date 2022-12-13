@@ -84,6 +84,48 @@ public class Consultas {
         return true;
     }
 
+    public static boolean buscarJugador () {
+        if (conectar() != null) {
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+                    System.out.println("Nombre jugador a buscar:");
+                    String nombre = br.readLine();
+
+
+                XPathQueryService servicio;
+                servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+                //Preparamos la consulta
+                ResourceSet result = servicio.query("/jugadores/jugador[nombre = \"" + nombre + "\"]/concat(nombre, \"| Nivel: \", nivel, \"| Vida: \", vida, \"(\", vida/@mejoras, \" mejoras ) | Ataque: \", ataque, \"(\", ataque/@mejoras, \" mejoras )\")");
+                // recorrer los datos del recurso.
+                ResourceIterator i;
+                i = result.getIterator();
+                if (!i.hasMoreResources()) {
+                    System.out.println(" Error:la consulta no retorna valores");
+                }
+                int a = 1;
+                System.out.println("Jugadores almacenados:");
+                while (i.hasMoreResources()) {
+                    Resource r = i.nextResource();
+                    System.out.println("");
+                    System.out.print(a + "-");
+                    System.out.print((String) r.getContent());
+                    a++;
+                }
+                col.close();
+            } catch (XMLDBException e) {
+                System.out.println(" Error: el documento no se pudo consultar");
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println(" Error: general");
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Error: la conexion esta mal");
+        }
+        return true;
+    }
+
 
     public static boolean mostrarPartidas () {
         if (conectar() != null) {
