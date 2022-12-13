@@ -23,7 +23,8 @@ public class Main {
             System.out.println("4-Guardar jugador");
             System.out.println("5-Guardar partida");
             System.out.println("6-Modificar jugador");
-            System.out.println("7-Salir");
+            System.out.println("7-Borrar jugador");
+            System.out.println("8-Salir");
 
             try {
                 opcion = br.readLine();
@@ -58,6 +59,10 @@ public class Main {
                 }break;
 
                 case ("7"):{
+                    Consultas.borrarJugador();
+                }break;
+
+                case ("8"):{
                     System.out.println("adios");
                     fin = true;
                 }break;

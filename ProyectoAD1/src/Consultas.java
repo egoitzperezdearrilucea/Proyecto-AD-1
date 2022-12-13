@@ -243,5 +243,30 @@ public class Consultas {
         }
     }
 
+    public static void borrarJugador() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        if (conectar() != null) {
+            try {
+                mostrarJugadores();
+                System.out.println("Nombre jugador a editar:");
+                String nombre = br.readLine();
+
+                XPathQueryService servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+                //Consulta para borrar un departamento --> update delete
+                ResourceSet result = servicio.query(
+                        "update delete /jugadores/jugador[nombre = \"" + nombre + "\"]");
+                col.close();
+                System.out.println("jugador borrado.");
+            } catch (Exception e) {
+                System.out.println("Error al borrar.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Error en la conexión. Comprueba datos.");
+        }
+
+    }
+
+
 
 }
