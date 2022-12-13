@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 
 
 public class Consultas {
@@ -178,8 +179,49 @@ public class Consultas {
             mostrarJugadores();
             System.out.println("Nombre jugador a editar:");
             String nombre = br.readLine();
-            System.out.println("Columna a editar:");
-            String columna = br.readLine();
+
+            String columna = null;
+            boolean fin = false;
+            String opcion;
+
+            while (!fin){
+                System.out.println("Columna a editar:");
+                System.out.println("1-puntosVida");
+                System.out.println("2-puntosAtaque");
+                System.out.println("3-nivel");
+
+                try {
+                    opcion = br.readLine();
+                } catch (IOException e) {
+                    System.out.println("Error: al introducir datos");
+                    throw new RuntimeException(e);
+                }
+
+                switch (opcion){
+                    case ("1"):{
+                        columna = "/vida/puntosVida";
+                        fin = true;
+                    }break;
+
+                    case ("2"):{
+                        columna = "/ataque/puntosAtaque";
+                        fin = true;
+                    }break;
+
+                    case ("3"):{
+                        columna = "/nivel";
+                        fin = true;
+                    }break;
+
+                    default: {
+                        System.out.println("no se entiende el input");
+                    }
+
+                }
+            }
+
+
+
             System.out.println("valor nuevo:");
             String valor = br.readLine();
             try {
@@ -188,7 +230,7 @@ public class Consultas {
                 //Consulta para modificar/actualizar un valor --> update value
                 ResourceSet result = servicio.query(
                         //"update value /jugadores/jugador[nombre=" + nombre + "]/" + columna + "with data(" + valor + ") ");
-                        "update value /jugadores/jugador[nombre = \"" + nombre + "\"]/nivel with " + valor);
+                        "update value /jugadores/jugador[nombre = \"" + nombre + "\"]" + columna + " with " + valor);
 
                 col.close();
                 System.out.println("Jugador actualizado.");
