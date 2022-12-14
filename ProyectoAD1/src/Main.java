@@ -21,11 +21,12 @@ public class Main {
             System.out.println("2-Ver partidas almacenadas");
             System.out.println("3-Ver jugadores almacenados");
             System.out.println("4-Buscar jugador");
-            System.out.println("5-Guardar jugador");
-            System.out.println("6-Guardar partida");
-            System.out.println("7-Modificar jugador");
-            System.out.println("8-Borrar jugador");
-            System.out.println("9-Salir");
+            System.out.println("5-Cargar jugador");
+            System.out.println("6-Guardar jugador");
+            System.out.println("7-Guardar partida");
+            System.out.println("8-Modificar jugador");
+            System.out.println("9-Borrar jugador");
+            System.out.println("10-Salir");
 
             try {
                 opcion = br.readLine();
@@ -52,22 +53,26 @@ public class Main {
                 }break;
 
                 case ("5"):{
-                    Consultas.guardarJugador(crearJugador());
+                    Consultas.cargarJugador();
                 }break;
 
                 case ("6"):{
-                    Consultas.guardarPartida(new Partida(LocalDateTime.now(), crearJugador().getNombre()));
+                    Consultas.guardarJugador(crearJugador());
                 }break;
 
                 case ("7"):{
-                    Consultas.modificarJugador();
+                    Consultas.guardarPartida(new Partida(LocalDateTime.now(), crearJugador().getNombre()));
                 }break;
 
                 case ("8"):{
-                    Consultas.borrarJugador();
+                    Consultas.modificarJugador();
                 }break;
 
                 case ("9"):{
+                    Consultas.borrarJugador();
+                }break;
+
+                case ("10"):{
                     System.out.println("adios");
                     fin = true;
                 }break;

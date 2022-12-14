@@ -1,10 +1,15 @@
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XPathQueryService;
 
+import javax.lang.model.element.Element;
+import javax.swing.text.Document;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 
@@ -125,6 +130,60 @@ public class Consultas {
         }
         return true;
     }
+
+    public static Jugador cargarJugador () {
+        Jugador jugador = null;
+        if (conectar() != null) {
+            try {
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+                mostrarJugadores();
+                System.out.println("Nombre jugador a cargar:");
+                String nombre = br.readLine();
+
+
+                XPathQueryService servicio;
+                servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+                //Preparamos la consulta
+                ResourceSet result = servicio.query("/jugadores/jugador[nombre = \"" + nombre + "\"]/concat(nombre, \",\", nivel, \",\", vida, \",\", vida/@mejoras, \",\", ataque, \",\", ataque/@mejoras)");
+                // recorrer los datos del recurso.
+                ResourceIterator i;
+                i = result.getIterator();
+                if (!i.hasMoreResources()) {
+                    System.out.println(" Error:la consulta no retorna valores");
+                }
+                int a = 1;
+                System.out.println("Jugadores almacenados:");
+                while (i.hasMoreResources()) {
+                    Resource r = i.nextResource();
+                    //System.out.println((String) r.getContent());
+                    String resultadoConsulta = (String) r.getContent();
+                    String[] datos = resultadoConsulta.split(",");
+                    /*
+                    for (int j = 0; j < datos.length; j++) {
+                        System.out.println(j + "-" + datos[j]);
+                    }
+
+                     */
+
+                    jugador = new Jugador(datos[0],new Vida(Integer.parseInt(datos[2]), Integer.parseInt(datos[1])), new Ataque(Integer.parseInt(datos[4]), Integer.parseInt(datos[3])), Integer.parseInt(datos[5]));
+
+                }
+                col.close();
+            } catch (XMLDBException e) {
+                System.out.println(" Error: el documento no se pudo consultar");
+                e.printStackTrace();
+            } catch (IOException e) {
+                System.out.println(" Error: general");
+                throw new RuntimeException(e);
+            }
+        } else {
+            System.out.println("Error: la conexion esta mal");
+        }
+        return jugador;
+    }
+
+
 
 
     public static boolean mostrarPartidas () {
