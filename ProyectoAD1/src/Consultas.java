@@ -56,7 +56,7 @@ public class Consultas {
 
     }
 
-    public static boolean mostrarJugadores () {
+    public static void mostrarJugadores () {
         if (conectar() != null) {
             try {
                 XPathQueryService servicio;
@@ -86,10 +86,10 @@ public class Consultas {
         } else {
             System.out.println("Error: la conexion esta mal");
         }
-        return true;
+
     }
 
-    public static boolean buscarJugador () {
+    public static void buscarJugador () {
         if (conectar() != null) {
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -128,7 +128,6 @@ public class Consultas {
         } else {
             System.out.println("Error: la conexion esta mal");
         }
-        return true;
     }
 
     public static Jugador cargarJugador () {
@@ -186,9 +185,10 @@ public class Consultas {
 
 
 
-    public static boolean mostrarPartidas () {
+    public static void mostrarPartidas () {
         if (conectar() != null) {
             try {
+
                 XPathQueryService servicio;
                 servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
                 //Preparamos la consulta
@@ -203,9 +203,7 @@ public class Consultas {
                 System.out.println("Partidas almacenadas:");
                 while (i.hasMoreResources()) {
                     Resource r = i.nextResource();
-                    System.out.println("");
-                    System.out.print(a + "-");
-                    System.out.print((String) r.getContent());
+                    System.out.println(a + "-" + (String) r.getContent());
                     a++;
                 }
                 col.close();
@@ -216,7 +214,48 @@ public class Consultas {
         } else {
             System.out.println("Error: la conexion esta mal");
         }
-        return true;
+    }
+
+    public static void mostrarCombatePartidas () {
+        if (conectar() != null) {
+            try {
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+                mostrarPartidas();
+                System.out.println("Fecha partida a leer:");
+                String fecha = br.readLine();
+
+
+                XPathQueryService servicio;
+                servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+                //Preparamos la consulta
+                ResourceSet result = servicio.query("/partidas/partida[fecha = \"" + fecha + "\"]/combates/combate/concat(@numero, \"- jugador: \", /jugador, \"(nivel: \", /jugador/@nivel,\") VS enemigo:\", /enemigo, \"| Resultado: \", @resultado)");
+                // recorrer los datos del recurso.
+                ResourceIterator i;
+                i = result.getIterator();
+                if (!i.hasMoreResources()) {
+                    System.out.println(" Error:la consulta no retorna valores");
+                }
+                System.out.println("Combates almacenados:");
+                while (i.hasMoreResources()) {
+                        Resource r = i.nextResource();
+                        System.out.println((String) r.getContent());
+
+
+                }
+
+                col.close();
+            } catch (XMLDBException e) {
+                System.out.println(" Error: el documento no se pudo consultar");
+                e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else {
+            System.out.println("Error: la conexion esta mal");
+        }
     }
 
     public static void guardarJugador (Jugador jugador) {

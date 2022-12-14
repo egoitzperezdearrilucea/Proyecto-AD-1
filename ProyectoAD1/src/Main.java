@@ -19,14 +19,15 @@ public class Main {
             System.out.println("Menu principal:");
             System.out.println("1-Jugar");
             System.out.println("2-Ver partidas almacenadas");
-            System.out.println("3-Ver jugadores almacenados");
-            System.out.println("4-Buscar jugador");
-            System.out.println("5-Cargar jugador");
-            System.out.println("6-Crear jugador");
-            System.out.println("7-Crear partida");
-            System.out.println("8-Modificar jugador");
-            System.out.println("9-Borrar jugador");
-            System.out.println("10-Salir");
+            System.out.println("3-Ver combates de una partida");
+            System.out.println("4-Ver jugadores almacenados");
+            System.out.println("5-Buscar jugador");
+            System.out.println("6-Cargar jugador");
+            System.out.println("7-Crear jugador");
+            System.out.println("8-Crear partida");
+            System.out.println("9-Modificar jugador");
+            System.out.println("10-Borrar jugador");
+            System.out.println("11-Salir");
 
             try {
                 opcion = br.readLine();
@@ -45,34 +46,38 @@ public class Main {
                 }break;
 
                 case ("3"):{
-                    Consultas.mostrarJugadores();
+                    Consultas.mostrarCombatePartidas();
                 }break;
 
                 case ("4"):{
-                    Consultas.buscarJugador();
+                    Consultas.mostrarJugadores();
                 }break;
 
                 case ("5"):{
-                    Consultas.cargarJugador();
+                    Consultas.buscarJugador();
                 }break;
 
                 case ("6"):{
-                    Consultas.guardarJugador(crearJugador());
+                    Consultas.cargarJugador();
                 }break;
 
                 case ("7"):{
-                    Consultas.guardarPartida(new Partida(LocalDateTime.now(), crearJugador().getNombre()));
+                    Consultas.guardarJugador(crearJugador());
                 }break;
 
                 case ("8"):{
-                    Consultas.modificarJugador();
+                    Consultas.guardarPartida(new Partida(LocalDateTime.now(), crearJugador().getNombre()));
                 }break;
 
                 case ("9"):{
-                    Consultas.borrarJugador();
+                    Consultas.modificarJugador();
                 }break;
 
                 case ("10"):{
+                    Consultas.borrarJugador();
+                }break;
+
+                case ("11"):{
                     System.out.println("adios");
                     fin = true;
                 }break;
