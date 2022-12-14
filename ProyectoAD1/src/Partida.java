@@ -52,8 +52,8 @@ public class Partida {
     }
 
 
-    //Exportar Partida
-
+    //Exportar Partida (Descomentar para usar sin BBDD)
+/*
     public static void exportarPartidaXML(Partida partida) {
 
         try {
@@ -78,6 +78,8 @@ public class Partida {
         }catch (Exception e)
         {e.printStackTrace();}
     }
+
+ */
 }
 
 class Combate{

@@ -45,49 +45,39 @@ public class Jugador implements Serializable {
     }
 
 
-    //Importar datos
+    //Importar datos (Descomentar para usar sin BBDD)
 
     /*
     public static Jugador importarJugadorDAT() throws IOException, ClassNotFoundException {
-
         File fichero = new File ("./src/Jugador.dat");
         Jugador  jugador = null;
-
         if (fichero.exists()){
             FileInputStream filein = new FileInputStream(fichero);
             ObjectInputStream dataIS = new ObjectInputStream(filein);
-
             jugador = (Jugador) dataIS.readObject();
-
             System.out.println("");
             System.out.println("Datos cargados de el jugador:");
             System.out.println("Nombre:" + jugador.getNombre());
             System.out.println("Nivel:" + jugador.getNivel());
             System.out.println("Vida:" + jugador.getVida());
             System.out.println("Ataque:" + jugador.getAtaque());
-
         }else {
             System.out.println("Error el fichero de el jugador no existe o no se encuentra en la ubicacion correcta, usa la funcion de generar un jugador nuevo o si ya tienes un 'Jugador.dat' asegurate de que este en la carpeta '/src' de el proyecto");
         }
-
         return jugador;
     }
-
      */
 
-    //Exportar datos
+    //Exportar datos (Descomentar para usar sin BBDD)
 
     /*
     public static void exportarJugadorDAT(Jugador jugador) throws IOException, ClassNotFoundException {
-
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         File fichero = new File ("./src/Jugador.dat");
         System.out.println("");
-
         if (fichero.exists()){
             Jugador jugadorExistente = Jugador.importarJugadorDAT();
             System.out.println("Ya existe un fichero 'Jugador.dat' con el jugador: " + jugadorExistente.getNombre() + " guardado");
-
             String opcion;
             Boolean correcto = false;
             while (!correcto) {
@@ -95,45 +85,34 @@ public class Jugador implements Serializable {
                 System.out.println("1-No");
                 System.out.println("2-Si");
                 opcion=br.readLine();
-
                 switch (opcion) {
                     case ("1"): {
-
                         correcto = true;
                     }
                     break;
-
                     case ("2"): {
                         FileOutputStream fileout = new FileOutputStream(fichero);
                         ObjectOutputStream dataOS = new ObjectOutputStream(fileout);
-
                         dataOS.writeObject(jugador);
-
                         System.out.println("Jugador exportado correctamente a 'Jugador.dat'");
-
                         correcto = true;
                     }
                     break;
-
                     default: {
                         System.out.println("no se entiende el input");
                         correcto = false;
                     }
                 }
             }
-
         }else {
             FileOutputStream fileout = new FileOutputStream(fichero);
             ObjectOutputStream dataOS = new ObjectOutputStream(fileout);
-
             dataOS.writeObject(jugador);
-
             System.out.println("Jugador exportado correctamente a 'Jugador.dat'");
         }
     }
-
      */
-
+    /*
     public static void exportarJugadorXML(Jugador jugador) {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -199,6 +178,7 @@ public class Jugador implements Serializable {
         }catch (Exception e)
         {e.printStackTrace();}
     }
+    */
 }
 
 class Vida{

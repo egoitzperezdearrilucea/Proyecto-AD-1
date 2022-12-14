@@ -252,13 +252,11 @@ public class Consultas {
         }
         combates = combates + "</combates>";
 
-        System.out.print(combates);
         String nuevaPartida = "<partida><fecha>" + partida.getFecha() + "</fecha><puntuacionTotal>"+partida.getPuntuacionTotal()+"</puntuacionTotal>" + combates + "<nombreJugador>" + partida.getNombreJugador() + "</nombreJugador></partida>";
 
         if (conectar() != null) {
             try {
                 XPathQueryService servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-                System.out.printf("Inserto: %s \n", nuevaPartida);
                 //Consulta para insertar --> update insert ... into
                 ResourceSet result = servicio.query("update insert " + nuevaPartida + " into /partidas");
                 col.close(); //borramos

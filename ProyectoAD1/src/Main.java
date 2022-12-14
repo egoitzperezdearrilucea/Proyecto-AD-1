@@ -22,8 +22,8 @@ public class Main {
             System.out.println("3-Ver jugadores almacenados");
             System.out.println("4-Buscar jugador");
             System.out.println("5-Cargar jugador");
-            System.out.println("6-Guardar jugador");
-            System.out.println("7-Guardar partida");
+            System.out.println("6-Crear jugador");
+            System.out.println("7-Crear partida");
             System.out.println("8-Modificar jugador");
             System.out.println("9-Borrar jugador");
             System.out.println("10-Salir");
@@ -129,7 +129,7 @@ public class Main {
             System.out.println("");
             System.out.println("Jugador:");
             System.out.println("1-Crear nuevo");
-            System.out.println("2-Cargar .dat");
+            System.out.println("2-Cargar jugador");
             try {
                 opcion = br.readLine();
             } catch (IOException e) {
@@ -144,7 +144,8 @@ public class Main {
                 }break;
 
                 case ("2"):{
-                    // jugador = Jugador.importarJugadorDAT();
+                    //jugador = Jugador.importarJugadorDAT(); (Descomentar para usar sin BBDD)
+                    jugador = Consultas.cargarJugador();
                     if (jugador != null){
                         correcto = true;
                     }else {
@@ -170,7 +171,7 @@ public class Main {
 
         int nCombate = 0;
         while (!fin){
-            //Seleccionar enemigo (falta)
+            //Seleccionar enemigo
             Enemigo enemigoSeleccionado = seleccionarEnemigo(enemigos);
 
             //turno
@@ -284,7 +285,7 @@ public class Main {
 
                     case ("2"): {
                         Consultas.guardarPartida(partida);
-                        Partida.exportarPartidaXML(partida);
+                        //Partida.exportarPartidaXML(partida); (Descomentar para usar sin BBDD)
                         correcto = true;
                     }
                     break;
@@ -325,7 +326,8 @@ public class Main {
                 break;
 
                 case ("2"): {
-                        /*
+                        Consultas.guardarJugador(jugador);
+                        /* (Descomentar para usar sin BBDD)
                         try{
                         Jugador.exportarJugadorDAT(jugador);
                         } catch (FileNotFoundException e) {
@@ -334,7 +336,7 @@ public class Main {
                         }
                          */
 
-                    Jugador.exportarJugadorXML(jugador);
+                    //Jugador.exportarJugadorXML(jugador); (Descomentar para usar sin BBDD)
                     correcto = true;
                 }
                 break;
@@ -531,8 +533,9 @@ public class Main {
                 break;
 
                 case ("2"): {
-                    //Jugador.exportarJugadorDAT(jugador);
-                    Jugador.exportarJugadorXML(jugador);
+                    //Jugador.exportarJugadorDAT(jugador); (Descomentar para usar sin BBDD)
+                    //Jugador.exportarJugadorXML(jugador); (Descomentar para usar sin BBDD)
+                    Consultas.guardarJugador(jugador);
                     correcto = true;
                 }
                 break;
