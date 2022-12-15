@@ -181,7 +181,7 @@ public class Jugador implements Serializable {
     */
 }
 
-class Vida{
+class Vida {
     int puntosVida;
     int mejorasVida;
 
@@ -207,7 +207,7 @@ class Vida{
     }
 }
 
-class Ataque{
+class Ataque {
     int puntosAtaque;
     int mejorasAtaque;
 

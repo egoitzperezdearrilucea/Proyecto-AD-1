@@ -82,7 +82,7 @@ public class Partida {
  */
 }
 
-class Combate{
+class Combate {
     Jugador jugador;
     String enemigo;
     String resultado;

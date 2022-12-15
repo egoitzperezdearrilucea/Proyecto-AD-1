@@ -71,7 +71,7 @@ public class Enemigo implements Serializable {
 
             }
         } else {
-            System.out.println("Error el fichero de los enemigos no existe, el codigo para generar este fichero se ejecutara generando un fichero nuevo");
+            System.out.println("Error: el fichero de los enemigos no existe, el codigo para generar este fichero se ejecutara generando un fichero nuevo");
         }
 
         return enemigos;
@@ -82,14 +82,14 @@ public class Enemigo implements Serializable {
 
     public static void exportarEnemigosDAT(Enemigo[] enemigos) {
 
-        File fichero = new File ("./src/Enemigos.dat");
+        File fichero = new File("./src/Enemigos.dat");
         ObjectOutputStream dataOS = null;
         try {
             FileOutputStream fileout = new FileOutputStream(fichero);
             dataOS = new ObjectOutputStream(fileout);
         } catch (IOException e) {
             System.out.println("Error: general");
-            throw new RuntimeException(e);
+            //throw new RuntimeException(e);
         }
 
         for (int i = 0; i < enemigos.length; i++) {
@@ -97,7 +97,7 @@ public class Enemigo implements Serializable {
                 dataOS.writeObject(enemigos[i]);
             } catch (IOException e) {
                 System.out.println("Error: general");
-                throw new RuntimeException(e);
+                //throw new RuntimeException(e);
             }
         }
 

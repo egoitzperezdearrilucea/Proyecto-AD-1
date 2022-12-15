@@ -5,16 +5,16 @@ public class Main {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         //Conexion BBDD
         Consultas.conectar();
 
         //Menu principal
         boolean fin = false;
-        String opcion;
+        String opcion = null;
 
-        while (!fin){
+        while (!fin) {
             System.out.println("");
             System.out.println("Menu principal:");
             System.out.println("1-Jugar");
@@ -32,55 +32,79 @@ public class Main {
             try {
                 opcion = br.readLine();
             } catch (IOException e) {
-                System.out.println("Error: al introducir datos");
-                throw new RuntimeException(e);
+                System.out.println("Error: al leer input");
+                //throw new RuntimeException(e);
             }
 
-            switch (opcion){
-                case ("1"):{
+            switch (opcion) {
+                case ("1"): {
                     jugar();
-                }break;
+                }
+                break;
 
-                case ("2"):{
+                case ("2"): {
                     Consultas.mostrarPartidas();
-                }break;
+                }
+                break;
 
-                case ("3"):{
+                case ("3"): {
                     Consultas.mostrarCombatePartidas();
-                }break;
+                }
+                break;
 
-                case ("4"):{
+                case ("4"): {
                     Consultas.mostrarJugadores();
-                }break;
+                }
+                break;
 
-                case ("5"):{
-                    Consultas.buscarJugador();
-                }break;
+                case ("5"): {
+                    System.out.println("Nombre jugador a buscar:");
+                    String nombre = null;
+                    try {
+                        nombre = br.readLine();
+                    } catch (IOException e) {
+                        System.out.println("Error: al leer input");
+                    }
+                    Consultas.buscarJugador(nombre);
+                }
+                break;
 
-                case ("6"):{
+                case ("6"): {
                     Consultas.cargarJugador();
-                }break;
+                }
+                break;
 
-                case ("7"):{
-                    Consultas.guardarJugador(crearJugador());
-                }break;
+                case ("7"): {
+                    //Consultas.guardarJugador(crearJugador());
+                    crearJugador();
+                }
+                break;
 
-                case ("8"):{
-                    Consultas.guardarPartida(new Partida(LocalDateTime.now(), crearJugador().getNombre()));
-                }break;
+                case ("8"): {
+                    Jugador jugador = Consultas.cargarJugador();
+                    if (jugador == null) {
+                        System.out.println("Error: no se puede generar una partida sin jugador");
+                    } else {
+                        Consultas.guardarPartida(new Partida(LocalDateTime.now(), jugador.getNombre()));
+                    }
+                }
+                break;
 
-                case ("9"):{
+                case ("9"): {
                     Consultas.modificarJugador();
-                }break;
+                }
+                break;
 
-                case ("10"):{
+                case ("10"): {
                     Consultas.borrarJugador();
-                }break;
+                }
+                break;
 
-                case ("11"):{
+                case ("11"): {
                     System.out.println("adios");
                     fin = true;
-                }break;
+                }
+                break;
 
                 default: {
                     System.out.println("no se entiende el input");
@@ -107,7 +131,7 @@ public class Main {
 
 //Importar enemigos
         enemigos = Enemigo.importarEnemigosDAT();
-        if (enemigos == null){
+        if (enemigos == null) {
             //Creacion de enemigos (Solo usar para crear .dat)
 
             System.out.println("Generando enemigos");
@@ -126,11 +150,10 @@ public class Main {
         }
 
 
-
         //Opciones jugador
 
         correcto = false;
-        while (!correcto){
+        while (!correcto) {
             System.out.println("");
             System.out.println("Jugador:");
             System.out.println("1-Crear nuevo");
@@ -142,22 +165,24 @@ public class Main {
                 throw new RuntimeException(e);
             }
 
-            switch (opcion){
-                case ("1"):{
+            switch (opcion) {
+                case ("1"): {
                     jugador = crearJugador();
                     correcto = true;
-                }break;
+                }
+                break;
 
-                case ("2"):{
+                case ("2"): {
                     //jugador = Jugador.importarJugadorDAT(); (Descomentar para usar sin BBDD)
                     jugador = Consultas.cargarJugador();
-                    if (jugador != null){
+                    if (jugador != null) {
                         correcto = true;
-                    }else {
+                    } else {
                         correcto = false;
                     }
 
-                }break;
+                }
+                break;
 
                 default: {
                     System.out.println("no se entiende el input");
@@ -175,7 +200,7 @@ public class Main {
         partida = new Partida(LocalDateTime.now(), jugador.getNombre());
 
         int nCombate = 0;
-        while (!fin){
+        while (!fin) {
             //Seleccionar enemigo
             Enemigo enemigoSeleccionado = seleccionarEnemigo(enemigos);
 
@@ -183,14 +208,14 @@ public class Main {
             Boolean combate = combate(jugador, enemigoSeleccionado, partida);
 
             //Comprobar resultado
-            if (!combate){
+            if (!combate) {
                 System.out.println("");
-                resultados[nCombate]= new Combate(jugador, enemigoSeleccionado.getNombre(), "Derrota", nCombate);
+                resultados[nCombate] = new Combate(jugador, enemigoSeleccionado.getNombre(), "Derrota", nCombate);
                 fin = true;
-            }else {
+            } else {
                 System.out.println("");
-                resultados[nCombate]= new Combate(jugador, enemigoSeleccionado.getNombre(), "Victoria", nCombate);
-                if (enemigoSeleccionado.getNombre() == "Mister Random"){
+                resultados[nCombate] = new Combate(jugador, enemigoSeleccionado.getNombre(), "Victoria", nCombate);
+                if (enemigoSeleccionado.getNombre() == "Mister Random") {
                     partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 100);
                 }
 
@@ -198,10 +223,10 @@ public class Main {
                 jugador.setNivel(jugador.getNivel() + 1);
                 System.out.println("Nivel: " + jugador.getNivel() + "(+1)");
 
-                if(jugador.getNivel()%5==0){
+                if (jugador.getNivel() % 5 == 0) {
 
                     correcto = false;
-                    while (!correcto){
+                    while (!correcto) {
                         System.out.println("");
                         System.out.println("Selecciona mejora:");
                         System.out.println("1-Mejora vida (+10) | actual: " + jugador.getVida().getPuntosVida());
@@ -213,20 +238,22 @@ public class Main {
                             throw new RuntimeException(e);
                         }
 
-                        switch (opcion){
-                            case ("1"):{
+                        switch (opcion) {
+                            case ("1"): {
                                 jugador.getVida().setPuntosVida(jugador.getVida().getPuntosVida() + 10);
                                 jugador.getVida().setMejorasVida(jugador.getVida().getMejorasVida() + 1);
                                 System.out.println("Vida: " + jugador.getVida().getPuntosVida());
                                 correcto = true;
-                            }break;
+                            }
+                            break;
 
-                            case ("2"):{
+                            case ("2"): {
                                 jugador.getAtaque().setPuntosAtaque(jugador.getAtaque().getPuntosAtaque() + 5);
                                 jugador.getAtaque().setMejorasAtaque(jugador.getAtaque().getMejorasAtaque() + 1);
                                 System.out.println("Ataque: " + jugador.getAtaque().getPuntosAtaque());
                                 correcto = true;
-                            }break;
+                            }
+                            break;
 
                             default: {
                                 System.out.println("no se entiende el input");
@@ -246,7 +273,7 @@ public class Main {
         //Guardar datos partida
         int nCombates = 0;
         for (int i = 0; i < resultados.length; i++) {
-            if (resultados[i] != null){
+            if (resultados[i] != null) {
                 nCombates++;
             }
         }
@@ -279,7 +306,7 @@ public class Main {
                 System.out.println("Desea exportar la partida?");
                 System.out.println("1-No");
                 System.out.println("2-Si");
-                opcion=br.readLine();
+                opcion = br.readLine();
 
                 switch (opcion) {
                     case ("1"): {
@@ -317,7 +344,7 @@ public class Main {
             System.out.println("1-No");
             System.out.println("2-Si");
             try {
-                opcion=br.readLine();
+                opcion = br.readLine();
             } catch (IOException e) {
                 System.out.println("Error: al introducir datos");
                 throw new RuntimeException(e);
@@ -331,7 +358,7 @@ public class Main {
                 break;
 
                 case ("2"): {
-                        Consultas.guardarJugador(jugador);
+                    Consultas.guardarJugador(jugador);
                         /* (Descomentar para usar sin BBDD)
                         try{
                         Jugador.exportarJugadorDAT(jugador);
@@ -354,13 +381,14 @@ public class Main {
         }
 
     }
+
     public static Enemigo seleccionarEnemigo(Enemigo[] enemigos) {
         boolean correcto = false;
         String opcion;
         Enemigo resultado = null;
         int seleccion = -1;
 
-        while (!correcto){
+        while (!correcto) {
             //Mostrar enemigos
             System.out.println("");
             System.out.println("Enemigos:");
@@ -385,17 +413,17 @@ public class Main {
                 System.out.println("Input no valido");
             }
 
-            if (seleccion !=-1){
+            if (seleccion != -1) {
 
-                if (seleccion > enemigos.length || seleccion < 0 ){
+                if (seleccion > enemigos.length || seleccion < 0) {
                     System.out.println("Input no valido");
-                }else{
-                    if (seleccion == enemigos.length){
+                } else {
+                    if (seleccion == enemigos.length) {
                         //Generar enemigo procedural
                         resultado = new Enemigo("Mister Random", (int) (Math.random() * (500 - 10 + 1) + 10), (int) (Math.random() * (100 - 5 + 1) + 5));
                         correcto = true;
 
-                    }else {
+                    } else {
                         //Guardar seleccion
                         resultado = enemigos[seleccion];
                         correcto = true;
@@ -417,7 +445,7 @@ public class Main {
         String opcion;
 
         while (!fin) {
-            correcto=false;
+            correcto = false;
 
             //Turno jugador
             while (!correcto) {
@@ -428,7 +456,7 @@ public class Main {
 
                 //Opciones turno
                 System.out.println("Accion:");
-                System.out.println("1-Atacar ("+ jugador.getAtaque().getPuntosAtaque() +" daño)");
+                System.out.println("1-Atacar (" + jugador.getAtaque().getPuntosAtaque() + " daño)");
                 System.out.println("2-Curar (+25 vida | " + jugador.getVida().getPuntosVida() + " max )");
                 try {
                     opcion = br.readLine();
@@ -444,7 +472,7 @@ public class Main {
                         System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " (-" + jugador.getAtaque().getPuntosAtaque() + ") | Ataque: " + enemigo.getAtaque());
                         System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " | Ataque: " + jugador.getAtaque().getPuntosAtaque());
 
-                        partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 10 );
+                        partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 10);
 
                         correcto = true;
                     }
@@ -452,7 +480,7 @@ public class Main {
 
                     case ("2"): {
                         vidaJugador = vidaJugador + 25;
-                        if (vidaJugador > jugador.getVida().getPuntosVida()){
+                        if (vidaJugador > jugador.getVida().getPuntosVida()) {
                             vidaJugador = jugador.getVida().getPuntosVida();
                         }
 
@@ -460,7 +488,7 @@ public class Main {
                         System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
                         System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (+25) | Ataque: " + jugador.getAtaque().getPuntosAtaque());
 
-                        partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 5 );
+                        partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 5);
 
                         correcto = true;
                     }
@@ -475,22 +503,22 @@ public class Main {
             }
 
             //Comprobacion victoria
-            if (vidaEnemigo <= 0){
+            if (vidaEnemigo <= 0) {
                 System.out.println("Victoria!");
-                partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 25 );
+                partida.setPuntuacionTotal(partida.getPuntuacionTotal() + 25);
                 fin = true;
                 resultado = true;
-            }else {
+            } else {
 
                 //Turno enemigo
                 vidaJugador = vidaJugador - enemigo.getAtaque();
                 System.out.println("");
                 System.out.println("El enemigo te ataca:");
                 System.out.println("Enemigo: " + enemigo.getNombre() + " | Vida: " + vidaEnemigo + " | Ataque: " + enemigo.getAtaque());
-                System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (-" + enemigo.getAtaque() +") | Ataque: " + jugador.getAtaque().getPuntosAtaque());
+                System.out.println("Jugador: " + jugador.getNombre() + " | Vida: " + vidaJugador + " (-" + enemigo.getAtaque() + ") | Ataque: " + jugador.getAtaque().getPuntosAtaque());
 
                 //Comprobacion derrota
-                if (vidaJugador <= 0){
+                if (vidaJugador <= 0) {
                     System.out.println("Derrota!");
                     fin = true;
                     resultado = false;
@@ -513,7 +541,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-        Jugador jugador = new Jugador(nombre, new Vida(100,0), new Ataque(20,0), 0);
+        Jugador jugador = new Jugador(nombre, new Vida(100, 0), new Ataque(20, 0), 0);
 
         System.out.println("Vida = " + jugador.getVida().getPuntosVida());
         System.out.println("Ataque = " + jugador.getAtaque().getPuntosAtaque());
@@ -524,7 +552,7 @@ public class Main {
             System.out.println("1-No");
             System.out.println("2-Si");
             try {
-                opcion=br.readLine();
+                opcion = br.readLine();
             } catch (IOException e) {
                 System.out.println("Error: al introducir datos");
                 throw new RuntimeException(e);
