@@ -1,0 +1,5 @@
+Los datos de la conexion de eXist estan el las lineas 18-21 de la clase consultas, el puerto esta en la linea 19 en la URI de coleccion.
+
+La coleccion y sus xml los puedes importar de el backup eXist-backup.zip que esta en esta carpeta.
+
+Las consultas estan todas en el menu principal, estan integradas en el juego original donde irian los exports y imports pero tambien las puedes testear desde el menu de manera mas rapida.

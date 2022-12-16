@@ -1,24 +1,18 @@
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.XPathQueryService;
 
-import javax.lang.model.element.Element;
-import javax.swing.text.Document;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDateTime;
 
 
 public class Consultas {
     static String driver = "org.exist.xmldb.DatabaseImpl"; //Driver para eXist
     static String URI = "xmldb:exist://localhost:8080/exist/xmlrpc/db/proyecto"; //URI colección
-    static String usu = "admin"; //Usuario
-    static String usuPwd = "admin"; //Clave
+    static String usuario = "admin"; //Usuario
+    static String password = "admin"; //Clave
     static Collection col;
 
 
@@ -28,7 +22,7 @@ public class Consultas {
             Class<Database> cl = (Class<Database>) Class.forName(driver); //Cargar del driver
             Database database = cl.getDeclaredConstructor().newInstance(); //Instancia de la BD
             DatabaseManager.registerDatabase(database); //Registro del driver
-            col = DatabaseManager.getCollection(URI, usu, usuPwd);
+            col = DatabaseManager.getCollection(URI, usuario, password);
             return col;
         } catch (XMLDBException e) {
             System.out.println("Error: al inicializar la BBDD eXist.");
@@ -100,7 +94,6 @@ public class Consultas {
             try {
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-
                 XPathQueryService servicio;
                 servicio = (XPathQueryService) col.getService("XPathQueryService", "1.0");
                 //Preparamos la consulta
@@ -149,7 +142,6 @@ public class Consultas {
         Jugador jugador = null;
         if (conectar() != null) {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
 
             mostrarJugadores();
             System.out.println("Nombre jugador a cargar:");
